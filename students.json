@@ -1,0 +1,303 @@
+[
+  {
+    "roll": "KSPI-011-001",
+    "name": "Xyz A",
+    "father": "Abcd A",
+    "mother": "Efgh A",
+    "nid": "1000000001",
+    "birth_certificate": "2000000001",
+    "ssc_year": "2023",
+    "session": "2024-25",
+    "department": "Computer Technology",
+    "semester": "3rd Semester",
+    "admission_date": "01 Jan 2024",
+    "discount": "50%",
+    "ref_by": "Mr. A",
+    "fees": {
+      "admission": "10000",
+      "monthly": "1200",
+      "library": "500"
+    },
+    "results": [
+      {"semester": "1st", "cgpa": "3.70", "mid": "75%", "paid": "5000 BDT", "Due": "00 BDT"},
+      {"semester": "2nd", "cgpa": "3.85", "mid": "82%", "paid": "4800 BDT", "Due": "00 BDT"},
+      {"semester": "3rd", "cgpa": "-", "mid": "-", "paid": "3000 BDT", "Due": "00 BDT"}
+    ]
+  },
+  {
+    "roll": "KSPI-011-002",
+    "name": "Xyz B",
+    "father": "Abcd B",
+    "mother": "Efgh B",
+    "nid": "1000000002",
+    "birth_certificate": "2000000002",
+    "ssc_year": "2022",
+    "session": "2023-24",
+    "department": "Civil Technology",
+    "semester": "2nd Semester",
+    "admission_date": "15 Feb 2023",
+    "discount": "30%",
+    "ref_by": "Mr. B",
+    "fees": {
+      "admission": "9000",
+      "monthly": "1000",
+      "library": "500"
+    },
+     "results": [
+      {"semester": "1st", "cgpa": "3.70", "mid": "75%", "paid": "5000 BDT", "Due": "00 BDT"},
+      {"semester": "2nd", "cgpa": "3.85", "mid": "82%", "paid": "4800 BDT", "Due": "00 BDT"},
+      {"semester": "3rd", "cgpa": "-", "mid": "-", "paid": "3000 BDT", "Due": "00 BDT"}
+    ]
+  },
+  {
+    "roll": "KSPI-011-003",
+    "name": "Xyz C",
+    "father": "Abcd C",
+    "mother": "Efgh C",
+    "nid": "1000000003",
+    "birth_certificate": "2000000003",
+    "ssc_year": "2022",
+    "session": "2023-24",
+    "department": "Civil Technology",
+    "semester": "2nd Semester",
+    "admission_date": "15 Feb 2023",
+    "discount": "30%",
+    "ref_by": "Mr. C",
+    "fees": {
+      "admission": "9000",
+      "monthly": "1000",
+      "library": "500"
+    },
+     "results": [
+      {"semester": "1st", "cgpa": "3.70", "mid": "75%", "paid": "5000 BDT", "Due": "00 BDT"},
+      {"semester": "2nd", "cgpa": "3.85", "mid": "82%", "paid": "4800 BDT", "Due": "00 BDT"},
+      {"semester": "3rd", "cgpa": "-", "mid": "-", "paid": "3000 BDT", "Due": "00 BDT"}
+    ]
+  },
+  {
+  "student": {
+    "id": "KSPI-011-004",
+    "name": "Dipto Kanto Das",
+    "father": "Narayan Chandra Das",
+    "mother": "Laxmi Rani Das",
+    "dob": "2002-12-25",
+    "gender": "Male",
+    "religion": "Hindu",
+    "bloodGroup": "O+",
+    "nationality": "Bangladeshi",
+    "phones": {
+      "student": "01728312408",
+      "guardian": "01987654321"
+    },
+    "nid": "1000000004",
+    "birthCert": "2000000004",
+    "gmail": "Dipto@gmail.com",
+    "sscYear": 2019,
+    "session": "2022-23",
+    "department": "CSE",
+    "program": "Diploma",
+    "semester": "11th Semester",
+    "admissionDate": "2024-01-01",
+    "discount": "65%",
+    "admissionFee": 6000,
+    "semesterFee": 12000,
+    "monthlyFee": 1000,
+    "paymentMethod": "Bank",
+    "address": {
+      "permanent": "House #12, Road #5, Barishal",
+      "present": "Flat #301, ABC Tower, Barishal"
+    },
+    "hostel": "KSPI Boys Hostel, Room #12",
+    "extraCurricular": "Coding Competition",
+    "status": "Active",
+    "photo": "./assets/student.png"
+  },
+  "currentStats": {
+    "semester": "11th Semester",
+    "registration": "Done",
+    "monthlyFee": 1000
+  },
+  "semesters": [
+    { "sem": "1st", "cgpa": 3.70, "mid": 75, "waiver": "20%", "monthly": 2000, "paid": 5000 },
+    { "sem": "2nd", "cgpa": 3.85, "mid": 82, "waiver": "20%", "monthly": 2000, "paid": 4800 }
+   
+  ]
+},
+
+  {
+    "roll": "KSPI-011-004",
+    "name": "Xyz D",
+    "father": "Abcd D",
+    "mother": "Efgh D",
+    "nid": "1000000004",
+    "birth_certificate": "2000000004",
+    "ssc_year": "2023",
+    "session": "2024-25",
+    "department": "Electrical Technology",
+    "semester": "1st Semester",
+    "admission_date": "01 Jan 2024",
+    "discount": "20%",
+    "ref_by": "Mr. D",
+    "fees": {
+      "admission": "9500",
+      "monthly": "2000",
+      "library": "500"
+    },
+     "results": [
+      {"semester": "1st", "cgpa": "3.70", "mid": "75%", "paid": "5000 BDT", "Due": "00 BDT"},
+      {"semester": "2nd", "cgpa": "3.85", "mid": "82%", "paid": "4800 BDT", "Due": "00 BDT"},
+      {"semester": "3rd", "cgpa": "-", "mid": "-", "paid": "3000 BDT", "Due": "00 BDT"}
+    ]
+  },
+  {
+    "roll": "KSPI-011-005",
+    "name": "Xyz E",
+    "father": "Abcd E",
+    "mother": "Efgh E",
+    "nid": "1000000005",
+    "birth_certificate": "2000000005",
+    "ssc_year": "2021",
+    "session": "2022-23",
+    "department": "Civil Technology",
+    "semester": "4th Semester",
+    "admission_date": "10 Jan 2022",
+    "discount": "25%",
+    "ref_by": "Mr. E",
+    "fees": {
+      "admission": "8000",
+      "monthly": "1000",
+      "library": "400"
+    },
+     "results": [
+      {"semester": "1st", "cgpa": "3.70", "mid": "75%", "paid": "5000 BDT", "Due": "00 BDT"},
+      {"semester": "2nd", "cgpa": "3.85", "mid": "82%", "paid": "4800 BDT", "Due": "00 BDT"},
+      {"semester": "3rd", "cgpa": "-", "mid": "-", "paid": "3000 BDT", "Due": "00 BDT"}
+    ]
+  },
+  {
+    "roll": "KSPI-011-006",
+    "name": "Xyz F",
+    "father": "Abcd F",
+    "mother": "Efgh F",
+    "nid": "1000000006",
+    "birth_certificate": "2000000006",
+    "ssc_year": "2023",
+    "session": "2024-25",
+    "department": "Computer Technology",
+    "semester": "2nd Semester",
+    "admission_date": "02 Jan 2024",
+    "discount": "40%",
+    "ref_by": "Mr. F",
+    "fees": {
+      "admission": "10000",
+      "monthly": "1200",
+      "library": "500"
+    },
+     "results": [
+      {"semester": "1st", "cgpa": "3.70", "mid": "75%", "paid": "5000 BDT", "Due": "00 BDT"},
+      {"semester": "2nd", "cgpa": "3.85", "mid": "82%", "paid": "4800 BDT", "Due": "00 BDT"},
+      {"semester": "3rd", "cgpa": "-", "mid": "-", "paid": "3000 BDT", "Due": "00 BDT"}
+    ]
+  },
+  {
+    "roll": "KSPI-011-007",
+    "name": "Xyz G",
+    "father": "Abcd G",
+    "mother": "Efgh G",
+    "nid": "1000000007",
+    "birth_certificate": "2000000007",
+    "ssc_year": "2022",
+    "session": "2023-24",
+    "department": "Electronics Technology",
+    "semester": "1st Semester",
+    "admission_date": "05 Feb 2023",
+    "discount": "35%",
+    "ref_by": "Mr. G",
+    "fees": {
+      "admission": "8500",
+      "monthly": "950",
+      "library": "500"
+    },
+     "results": [
+      {"semester": "1st", "cgpa": "3.70", "mid": "75%", "paid": "5000 BDT", "Due": "00 BDT"},
+      {"semester": "2nd", "cgpa": "3.85", "mid": "82%", "paid": "4800 BDT", "Due": "00 BDT"},
+      {"semester": "3rd", "cgpa": "-", "mid": "-", "paid": "3000 BDT", "Due": "00 BDT"}
+    ]
+  },
+  {
+    "roll": "KSPI-011-008",
+    "name": "Xyz H",
+    "father": "Abcd H",
+    "mother": "Efgh H",
+    "nid": "1000000008",
+    "birth_certificate": "2000000008",
+    "ssc_year": "2021",
+    "session": "2022-23",
+    "department": "Civil Technology",
+    "semester": "5th Semester",
+    "admission_date": "01 Jan 2022",
+    "discount": "20%",
+    "ref_by": "Mr. H",
+    "fees": {
+      "admission": "8000",
+      "monthly": "950",
+      "library": "500"
+    },
+     "results": [
+      {"semester": "1st", "cgpa": "3.70", "mid": "75%", "paid": "5000 BDT", "Due": "00 BDT"},
+      {"semester": "2nd", "cgpa": "3.85", "mid": "82%", "paid": "4800 BDT", "Due": "00 BDT"},
+      {"semester": "3rd", "cgpa": "-", "mid": "-", "paid": "3000 BDT", "Due": "00 BDT"}
+    ]
+  },
+  {
+    "roll": "KSPI-011-009",
+    "name": "Xyz I",
+    "father": "Abcd I",
+    "mother": "Efgh I",
+    "nid": "1000000009",
+    "birth_certificate": "2000000009",
+    "ssc_year": "2020",
+    "session": "2021-22",
+    "department": "Computer Technology",
+    "semester": "6th Semester",
+    "admission_date": "01 Jan 2021",
+    "discount": "15%",
+    "ref_by": "Mr. I",
+    "fees": {
+      "admission": "9500",
+      "monthly": "1100",
+      "library": "500"
+    },
+     "results": [
+      {"semester": "1st", "cgpa": "3.70", "mid": "75%", "paid": "5000 BDT", "Due": "00 BDT"},
+      {"semester": "2nd", "cgpa": "3.85", "mid": "82%", "paid": "4800 BDT", "Due": "00 BDT"},
+      {"semester": "3rd", "cgpa": "-", "mid": "-", "paid": "3000 BDT", "Due": "00 BDT"}
+    ]
+  },
+  {
+    "roll": "KSPI-011-010",
+    "name": "Xyz J",
+    "father": "Abcd J",
+    "mother": "Efgh J",
+    "nid": "1000000010",
+    "birth_certificate": "2000000010",
+    "ssc_year": "2023",
+    "session": "2024-25",
+    "department": "Mechanical Technology",
+    "semester": "1st Semester",
+    "admission_date": "05 Jan 2024",
+    "discount": "50%",
+    "ref_by": "Mr. J",
+    "fees": {
+      "admission": "10000",
+      "monthly": "1200",
+      "library": "500"
+    },
+     "results": [
+      {"semester": "1st", "cgpa": "3.70", "mid": "75%", "paid": "5000 BDT", "Due": "00 BDT"},
+      {"semester": "2nd", "cgpa": "3.85", "mid": "82%", "paid": "4800 BDT", "Due": "00 BDT"},
+      {"semester": "3rd", "cgpa": "-", "mid": "-", "paid": "3000 BDT", "Due": "00 BDT"}
+    ]
+  }
+ 
+]

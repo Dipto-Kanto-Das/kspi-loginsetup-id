@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KSPI Student Dashboard</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+    .avatar-xl { width: 80px; height: 80px; border-radius: 50%; }
+    .info-grid dt { font-weight: 500; }
+    .info-grid dd { margin-bottom: 0.5rem; }
+    .section-title { font-weight: 600; margin-bottom: 1rem; font-size: 1.2rem; }
+</style>
+<!-- Header Section -->
+<div class="container-fluid bg-success bg-opacity-10 py-2">
+  <div class="container">
+    <div class="row align-items-center text-center text-md-start">
+      
+      <!-- Left: Two Logos -->
+      <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start align-items-center mb-2 mb-md-0">
+        <a href="index.html" class="me-2">
+          <img src="./img/logo-chang.png" alt="Logo 1" height="80" />
+        </a>
+        <a href="index.html">
+          <img src="./img/logo-1.png" alt="Logo 2" height="60" />
+        </a>
+      </div>
+
+      <!-- Center: Heading Text -->
+      <div class="col-12 col-md-5 mb-2 mb-md-0">
+        <h3 class="had-p m-0 fw-semibold text-danger ">
+          ৪ বছর মেয়াদী ডিপ্লোমা ইন ইঞ্জিনিয়ারিং কোর্সে ভর্তি চলিতেছে
+        </h3>
+      </div>
+
+      <!-- Right: Apply Now Button -->
+      <div class="col-12 col-md-3 text-center text-md-end">
+        <a class="btn btn-primary" href="apply.html">Apply Now</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+</head>
+<body>
+    <!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button> 
+
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#ass">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="#us">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="#mag">Message</a></li>
+        <li class="nav-item"><a class="nav-link" href="#dss">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+        <!-- <li class="nav-item"><a class="nav-link" href="#">Sign-Up</a></li> -->
+        <li class="nav-item"><a class="nav-link" href="result.html">Result</a></li>
+        <li class="nav-item"><a class="nav-link" href="notice.html">Notice</a></li>
+        <li class="nav-item"><a class="nav-link" href="faculty.html">Faculty</a></li>
+        <li class="nav-item"><a class="nav-link" href="id.html">Students</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Navigation End -->
+    <!-- Latest Update Marquee -->
+    <section class="bg-warning py-2">
+        <div class="container">
+          <marquee behavior="scroll" direction="left" scrollamount="5" class="fw-bold fs-6 text-dark" onmouseover="this.stop()" onmouseout="this.start()">
+            <img src="./img/logo-chang.png" alt="Book Icon" style="height: 36px;  margin-right: 10px;">
+            "KSPI তে আপনাকে  স্বাগতম এবং আমাদের সাথে যুক্ত হওয়ার জন্য ধন্যবাদ। ভর্তি সংক্রান্ত যেকোনো তথ্যের জন্য,যোগাযোগ করুনঃ-স্থানঃ ফিশারি রোড, বরিশাল,ফোনঃ 01728312408, ই-মেইলঃ dipto2512@gmail.com"
+          </marquee>
+        </div>
+      </section>
+
+
+<main class="container my-4">
+<!-- Student ID search  -->
+<div class="mb-4 d-flex justify-content-center">
+    <div class="p-3 bg-light rounded-3 shadow-sm d-flex align-items-center gap-3" style="min-width: 400px;">
+        <input type="text" id="searchId" class="form-control" placeholder="Student ID">
+        <button class="btn btn-primary rounded-pill px-4" onclick="searchStudent()">
+            <i class="bi bi-search"></i> 
+        </button>
+    </div>
+</div>
+<!-- Student Header Card -->
+<div class="card shadow-sm mb-4" id="headerCard" style="display:none;">
+    <div class="card-body">
+        <div class="row g-4 align-items-center">
+            <div class="col-auto">
+                <img id="studentPhoto" class="avatar-xl shadow-sm" src="" alt="Student Photo">
+            </div>
+            <div class="col">
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                    <h2 class="h4 mb-0" id="studentName">Name</h2>
+                    <span class="badge badge-soft">ID: <span class="fw-semibold" id="studentID">-</span></span>
+                    <span class="badge text-bg-success" id="studentStatus">Active</span>
+                </div>
+                <div class="text-secondary small mt-1" id="studentProgram">Program</div>
+                <div class="mt-3 d-flex flex-wrap gap-3">
+                    <div class="d-flex align-items-center gap-2"><span class="text-secondary">Phone:</span> <span class="fw-semibold" id="studentPhone">-</span></div>
+                    <div class="d-flex align-items-center gap-2"><span class="text-secondary">Gmail:</span> <span class="fw-semibold" id="studentGmail">-</span></div>
+                    <div class="d-flex align-items-center gap-2"><span class="text-secondary">Waiver:</span> <span class="fw-bold" id="studentWaiver">-</span></div>
+                </div>
+            </div>
+            <div class="col-12 col-md-auto ms-auto">
+                <div class="d-flex gap-2">
+                    <label class="btn btn-outline-primary btn-sm mb-0" for="photoInput">Change Photo</label>
+                    <input id="photoInput" type="file" accept="image/*" class="d-none">
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#photoModal">View</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Stats -->
+<div class="row g-3 mb-4" id="quickStats" style="display:none;">
+    <div class="col-12 col-md-4">
+        <div class="card stat-card shadow-sm h-100">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="text-secondary">Current</div>
+                    <div class="h5 mb-0" id="currentSemester">-</div>
+                </div>
+                <i class="bi bi-calendar3 fs-2 text-primary"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="card stat-card shadow-sm h-100">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="text-secondary">Registration</div>
+                    <div class="h5 mb-0" id="registrationStatus">-</div>
+                </div>
+                <i class="bi bi-pencil-square fs-2 text-primary"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="card stat-card shadow-sm h-100">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="text-secondary">Monthly Fee</div>
+                    <div class="h5 mb-0" id="monthlyFee">-</div>
+                </div>
+                <i class="bi bi-cash-coin fs-2 text-primary"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Student Academic Details -->
+<section class="mb-4" id="academicDetails" style="display:none;">
+    <div class="section-title">🎓 Student Full Academic Details</div>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <dl class="row info-grid">
+                <dt class="col-sm-4 col-lg-3">Student Card No</dt><dd class="col-sm-8 col-lg-9" id="cardNo">-</dd>
+                <dt class="col-sm-4 col-lg-3">Name</dt><dd class="col-sm-8 col-lg-9" id="fullName">-</dd>
+                <dt class="col-sm-4 col-lg-3">Father's Name</dt><dd class="col-sm-8 col-lg-9" id="fatherName">-</dd>
+                <dt class="col-sm-4 col-lg-3">Mother's Name</dt><dd class="col-sm-8 col-lg-9" id="motherName">-</dd>
+                <dt class="col-sm-4 col-lg-3">Religion</dt><dd class="col-sm-8 col-lg-9" id="religion">-</dd>
+                <dt class="col-sm-4 col-lg-3">Gender</dt><dd class="col-sm-8 col-lg-9" id="gender">-</dd>
+                <dt class="col-sm-4 col-lg-3">Date of Birth</dt><dd class="col-sm-8 col-lg-9" id="dob">-</dd>
+                <dt class="col-sm-4 col-lg-3">Blood Group</dt><dd class="col-sm-8 col-lg-9" id="bloodGroup">-</dd>
+                <dt class="col-sm-4 col-lg-3">Nationality</dt><dd class="col-sm-8 col-lg-9" id="nationality">-</dd>
+                <dt class="col-sm-4 col-lg-3">Phone (Student)</dt><dd class="col-sm-8 col-lg-9" id="phoneStudent">-</dd>
+                <dt class="col-sm-4 col-lg-3">Phone (Guardian)</dt><dd class="col-sm-8 col-lg-9" id="phoneGuardian">-</dd>
+                <dt class="col-sm-4 col-lg-3">NID</dt><dd class="col-sm-8 col-lg-9" id="nid">-</dd>
+                <dt class="col-sm-4 col-lg-3">Birth Certificate No</dt><dd class="col-sm-8 col-lg-9" id="birthCert">-</dd>
+                <dt class="col-sm-4 col-lg-3">Gmail</dt><dd class="col-sm-8 col-lg-9" id="gmail">-</dd>
+                <dt class="col-sm-4 col-lg-3">SSC Year</dt><dd class="col-sm-8 col-lg-9" id="sscYear">-</dd>
+                <dt class="col-sm-4 col-lg-3">Session</dt><dd class="col-sm-8 col-lg-9" id="session">-</dd>
+                <dt class="col-sm-4 col-lg-3">Department</dt><dd class="col-sm-8 col-lg-9" id="department">-</dd>
+                <dt class="col-sm-4 col-lg-3">Program Type</dt><dd class="col-sm-8 col-lg-9" id="programType">-</dd>
+                <dt class="col-sm-4 col-lg-3">Semester</dt><dd class="col-sm-8 col-lg-9" id="semester">-</dd>
+                <dt class="col-sm-4 col-lg-3">Admission Date</dt><dd class="col-sm-8 col-lg-9" id="admissionDate">-</dd>
+                <dt class="col-sm-4 col-lg-3">Discount</dt><dd class="col-sm-8 col-lg-9" id="discount">-</dd>
+                <dt class="col-sm-4 col-lg-3">Admission Fee</dt><dd class="col-sm-8 col-lg-9" id="admissionFee">-</dd>
+                <dt class="col-sm-4 col-lg-3">Semester Fee</dt><dd class="col-sm-8 col-lg-9" id="semesterFee">-</dd>
+                <dt class="col-sm-4 col-lg-3">Monthly Fee</dt><dd class="col-sm-8 col-lg-9" id="monthlyFeeDetail">-</dd>
+                <dt class="col-sm-4 col-lg-3">Payment Method History</dt><dd class="col-sm-8 col-lg-9" id="paymentMethod">-</dd>
+                <dt class="col-sm-4 col-lg-3">Address (Permanent)</dt><dd class="col-sm-8 col-lg-9" id="permAddress">-</dd>
+                <dt class="col-sm-4 col-lg-3">Address (Present)</dt><dd class="col-sm-8 col-lg-9" id="presAddress">-</dd>
+                <dt class="col-sm-4 col-lg-3">Hostel / Dormitory Info</dt><dd class="col-sm-8 col-lg-9" id="hostelInfo">-</dd>
+                <dt class="col-sm-4 col-lg-3">Extra-curricular</dt><dd class="col-sm-8 col-lg-9" id="extraCurricular">-</dd>
+                <dt class="col-sm-4 col-lg-3">Student Status Notes</dt><dd class="col-sm-8 col-lg-9" id="statusNotes">-</dd>
+            </dl>
+        </div>
+    </div>
+</section>
+
+<!-- Semester-wise Result -->
+<section class="mb-4" id="semesterResult" style="display:none;">
+    <div class="section-title">📘 Semester-wise Result</div>
+    <div class="card shadow-sm mb-3 table-responsive">
+        <table class="table table-bordered align-middle" id="resultTable">
+            <thead class="table-light">
+                <tr><th>Semester</th><th>CGPA</th><th>Midterm (%)</th></tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot class="table-light">
+                <tr><th>Average</th><th id="avgCgpa">-</th><th>-</th></tr>
+            </tfoot>
+        </table>
+    </div>
+</section>
+
+<!-- Semester-wise Accounting -->
+<section id="semesterAccounting" style="display:none;">
+    <div class="section-title">💰 Semester-wise Accounting</div>
+    <div class="card shadow-sm table-responsive">
+        <table class="table table-bordered align-middle" id="accountingTable">
+            <thead class="table-light">
+                <tr><th>Semester</th><th>Waiver</th><th>Monthly Fee</th><th>Paid</th><th>Due</th></tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot class="table-light">
+                <tr>
+                    <th>Total</th><th>-</th><th>-</th><th id="totalPaid">0 BDT</th><th id="totalDue">0 BDT</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</section>
+</main>
+
+<!-- Photo Modal -->
+<div class="modal fade" id="photoModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Student Photo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="studentPhotoLarge" src="./assets/student.png" class="img-fluid rounded-3" alt="Student Photo Large">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const photoInput = document.getElementById('photoInput');
+const studentPhoto = document.getElementById('studentPhoto');
+const studentPhotoLarge = document.getElementById('studentPhotoLarge');
+
+photoInput?.addEventListener('change', e => {
+    const file = e.target.files?.[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+        studentPhoto.src = reader.result;
+        studentPhotoLarge.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+});
+
+// Sample Students Data
+const students = [
+  {
+    id: 'KSPI-011-010',
+    name: 'Dipto Kanto Das',
+    father: 'Narayan Chandra Das',
+    mother: 'Laxmi Rani Das',
+    phone: '01728312408',
+    gmail: 'dipto10@gmail.com',
+    status: 'Active',
+    program: 'B.Sc in CSE (Regular)',
+    waiver: '65%',
+    cardNo: 'KSPI-011-004',
+    religion: 'Hindu',
+    gender: 'Male',
+    dob: '25 Dec 2002',
+    blood: 'O+',
+    nationality: 'Bangladeshi',
+    phoneGuardian: '01987654321',
+    nid: '1000000010',
+    birthCert: '2000000010',
+    sscYear: '2019',
+    session: '2022-23',
+    department: 'CSE',
+    programType: 'Diploma',
+    semester: '11th Semester',
+    admissionDate: '01 Jan 2024',
+    discount: '65%',
+    admissionFee: '6000 BDT',
+    semesterFee: '12000 BDT',
+    monthlyFee: '1000 BDT',
+    paymentMethod: 'Bank',
+    permAddress: 'House #12, Road #5, Barishal',
+    presAddress: 'Flat #301, ABC Tower, Barishal',
+    hostel: 'KSPI Boys Hostel, Room #12',
+    extra: 'Coding Competition',
+    statusNotes: 'Active',
+    currentSemester: '2025-11th Semester',
+    registration: 'Done',
+    semesters: [
+      { sem:'1st', cgpa:3.70, mid:75, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'2nd', cgpa:3.85, mid:82, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'3rd', cgpa:3.65, mid:78, waiver:'20%', monthly:2000, paid:4000 },
+      { sem:'4th', cgpa:3.80, mid:80, waiver:'20%', monthly:2000, paid:4500 },
+      { sem:'5th', cgpa:3.90, mid:85, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'6th', cgpa:3.75, mid:79, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'7th', cgpa:3.88, mid:83, waiver:'20%', monthly:2000, paid:5200 },
+      { sem:'8th', cgpa:3.92, mid:87, waiver:'20%', monthly:2000, paid:5500 }
+    ]
+  },
+  {
+    id: 'KSPI-011-011',
+    name: 'Paranto Kanto Das',
+    father: 'Narayan Chandra Das',
+    mother: 'Laxmi Rani Das',
+    phone: '01728312409',
+    gmail: 'paranto11@gmail.com',
+    status: 'Active',
+    program: 'B.Sc in CSE (Regular)',
+    waiver: '65%',
+    cardNo: 'KSPI-011-005',
+    religion: 'Hindu',
+    gender: 'Male',
+    dob: '26 Dec 2002',
+    blood: 'O+',
+    nationality: 'Bangladeshi',
+    phoneGuardian: '01987654322',
+    nid: '1000000011',
+    birthCert: '2000000011',
+    sscYear: '2019',
+    session: '2022-23',
+    department: 'CSE',
+    programType: 'Diploma',
+    semester: '11th Semester',
+    admissionDate: '01 Jan 2024',
+    discount: '65%',
+    admissionFee: '6000 BDT',
+    semesterFee: '12000 BDT',
+    monthlyFee: '1000 BDT',
+    paymentMethod: 'Bank',
+    permAddress: 'House #13, Road #5, Barishal',
+    presAddress: 'Flat #302, ABC Tower, Barishal',
+    hostel: 'KSPI Boys Hostel, Room #13',
+    extra: 'Coding Competition',
+    statusNotes: 'Active',
+    currentSemester: '2025-11th Semester',
+    registration: 'Done',
+    semesters: [
+      { sem:'1st', cgpa:3.70, mid:75, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'2nd', cgpa:3.85, mid:82, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'3rd', cgpa:3.65, mid:78, waiver:'20%', monthly:2000, paid:4000 },
+      { sem:'4th', cgpa:3.80, mid:80, waiver:'20%', monthly:2000, paid:4500 },
+      { sem:'5th', cgpa:3.90, mid:85, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'6th', cgpa:3.75, mid:79, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'7th', cgpa:3.88, mid:83, waiver:'20%', monthly:2000, paid:5200 },
+      { sem:'8th', cgpa:3.92, mid:87, waiver:'20%', monthly:2000, paid:5500 }
+    ]
+  },
+  {
+    id: 'KSPI-011-012',
+    name: 'Ananto Kumar Das',
+    father: 'Ramesh Chandra Das',
+    mother: 'Sunita Rani Das',
+    phone: '01728312410',
+    gmail: 'ananto12@gmail.com',
+    status: 'Active',
+    program: 'B.Sc in CSE (Regular)',
+    waiver: '65%',
+    cardNo: 'KSPI-011-006',
+    religion: 'Hindu',
+    gender: 'Male',
+    dob: '27 Dec 2002',
+    blood: 'O+',
+    nationality: 'Bangladeshi',
+    phoneGuardian: '01987654323',
+    nid: '1000000012',
+    birthCert: '2000000012',
+    sscYear: '2019',
+    session: '2022-23',
+    department: 'CSE',
+    programType: 'Diploma',
+    semester: '11th Semester',
+    admissionDate: '01 Jan 2024',
+    discount: '65%',
+    admissionFee: '6000 BDT',
+    semesterFee: '12000 BDT',
+    monthlyFee: '1000 BDT',
+    paymentMethod: 'Bank',
+    permAddress: 'House #14, Road #5, Barishal',
+    presAddress: 'Flat #303, ABC Tower, Barishal',
+    hostel: 'KSPI Boys Hostel, Room #14',
+    extra: 'Coding Competition',
+    statusNotes: 'Active',
+    currentSemester: '2025-11th Semester',
+    registration: 'Done',
+    semesters: [
+      { sem:'1st', cgpa:3.70, mid:75, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'2nd', cgpa:3.85, mid:82, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'3rd', cgpa:3.65, mid:78, waiver:'20%', monthly:2000, paid:4000 },
+      { sem:'4th', cgpa:3.80, mid:80, waiver:'20%', monthly:2000, paid:4500 },
+      { sem:'5th', cgpa:3.90, mid:85, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'6th', cgpa:3.75, mid:79, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'7th', cgpa:3.88, mid:83, waiver:'20%', monthly:2000, paid:5200 },
+      { sem:'8th', cgpa:3.92, mid:87, waiver:'20%', monthly:2000, paid:5500 }
+    ]
+  },
+  {
+    id: 'KSPI-011-013',
+    name: 'Ranjan Kanti Das',
+    father: 'Shyamal Chandra Das',
+    mother: 'Bela Rani Das',
+    phone: '01728312411',
+    gmail: 'ranjan13@gmail.com',
+    status: 'Active',
+    program: 'B.Sc in CSE (Regular)',
+    waiver: '65%',
+    cardNo: 'KSPI-011-007',
+    religion: 'Hindu',
+    gender: 'Male',
+    dob: '28 Dec 2002',
+    blood: 'O+',
+    nationality: 'Bangladeshi',
+    phoneGuardian: '01987654324',
+    nid: '1000000013',
+    birthCert: '2000000013',
+    sscYear: '2019',
+    session: '2022-23',
+    department: 'CSE',
+    programType: 'Diploma',
+    semester: '11th Semester',
+    admissionDate: '01 Jan 2024',
+    discount: '65%',
+    admissionFee: '6000 BDT',
+    semesterFee: '12000 BDT',
+    monthlyFee: '1000 BDT',
+    paymentMethod: 'Bank',
+    permAddress: 'House #15, Road #5, Barishal',
+    presAddress: 'Flat #304, ABC Tower, Barishal',
+    hostel: 'KSPI Boys Hostel, Room #15',
+    extra: 'Coding Competition',
+    statusNotes: 'Active',
+    currentSemester: '2025-11th Semester',
+    registration: 'Done',
+    semesters: [
+      { sem:'1st', cgpa:3.70, mid:75, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'2nd', cgpa:3.85, mid:82, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'3rd', cgpa:3.65, mid:78, waiver:'20%', monthly:2000, paid:4000 },
+      { sem:'4th', cgpa:3.80, mid:80, waiver:'20%', monthly:2000, paid:4500 },
+      { sem:'5th', cgpa:3.90, mid:85, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'6th', cgpa:3.75, mid:79, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'7th', cgpa:3.88, mid:83, waiver:'20%', monthly:2000, paid:5200 },
+      { sem:'8th', cgpa:3.92, mid:87, waiver:'20%', monthly:2000, paid:5500 }
+    ]
+  },
+  {
+    id: 'KSPI-011-014',
+    name: 'Sujon Kanto Das',
+    father: 'Pradip Chandra Das',
+    mother: 'Kalpana Rani Das',
+    phone: '01728312412',
+    gmail: 'sujon14@gmail.com',
+    status: 'Active',
+    program: 'B.Sc in CSE (Regular)',
+    waiver: '65%',
+    cardNo: 'KSPI-011-008',
+    religion: 'Hindu',
+    gender: 'Male',
+    dob: '29 Dec 2002',
+    blood: 'O+',
+    nationality: 'Bangladeshi',
+    phoneGuardian: '01987654325',
+    nid: '1000000014',
+    birthCert: '2000000014',
+    sscYear: '2019',
+    session: '2022-23',
+    department: 'CSE',
+    programType: 'Diploma',
+    semester: '11th Semester',
+    admissionDate: '01 Jan 2024',
+    discount: '65%',
+    admissionFee: '6000 BDT',
+    semesterFee: '12000 BDT',
+    monthlyFee: '1000 BDT',
+    paymentMethod: 'Bank',
+    permAddress: 'House #16, Road #5, Barishal',
+    presAddress: 'Flat #305, ABC Tower, Barishal',
+    hostel: 'KSPI Boys Hostel, Room #16',
+    extra: 'Coding Competition',
+    statusNotes: 'Active',
+    currentSemester: '2025-11th Semester',
+    registration: 'Done',
+    semesters: [
+      { sem:'1st', cgpa:3.70, mid:75, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'2nd', cgpa:3.85, mid:82, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'3rd', cgpa:3.65, mid:78, waiver:'20%', monthly:2000, paid:4000 },
+      { sem:'4th', cgpa:3.80, mid:80, waiver:'20%', monthly:2000, paid:4500 },
+      { sem:'5th', cgpa:3.90, mid:85, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'6th', cgpa:3.75, mid:79, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'7th', cgpa:3.88, mid:83, waiver:'20%', monthly:2000, paid:5200 },
+      { sem:'8th', cgpa:3.92, mid:87, waiver:'20%', monthly:2000, paid:5500 }
+    ]
+  },
+  {
+    id: 'KSPI-011-015',
+    name: 'Tuhin Kanto Das',
+    father: 'Ram Chandra Das',
+    mother: 'Mina Rani Das',
+    phone: '01728312413',
+    gmail: 'tuhin15@gmail.com',
+    status: 'Active',
+    program: 'B.Sc in CSE (Regular)',
+    waiver: '65%',
+    cardNo: 'KSPI-011-009',
+    religion: 'Hindu',
+    gender: 'Male',
+    dob: '30 Dec 2002',
+    blood: 'O+',
+    nationality: 'Bangladeshi',
+    phoneGuardian: '01987654326',
+    nid: '1000000015',
+    birthCert: '2000000015',
+    sscYear: '2019',
+    session: '2022-23',
+    department: 'CSE',
+    programType: 'Diploma',
+    semester: '11th Semester',
+    admissionDate: '01 Jan 2024',
+    discount: '65%',
+    admissionFee: '6000 BDT',
+    semesterFee: '12000 BDT',
+    monthlyFee: '1000 BDT',
+    paymentMethod: 'Bank',
+    permAddress: 'House #17, Road #5, Barishal',
+    presAddress: 'Flat #306, ABC Tower, Barishal',
+    hostel: 'KSPI Boys Hostel, Room #17',
+    extra: 'Coding Competition',
+    statusNotes: 'Active',
+    currentSemester: '2025-11th Semester',
+    registration: 'Done',
+    semesters: [
+      { sem:'1st', cgpa:3.70, mid:75, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'2nd', cgpa:3.85, mid:82, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'3rd', cgpa:3.65, mid:78, waiver:'20%', monthly:2000, paid:4000 },
+      { sem:'4th', cgpa:3.80, mid:80, waiver:'20%', monthly:2000, paid:4500 },
+      { sem:'5th', cgpa:3.90, mid:85, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'6th', cgpa:3.75, mid:79, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'7th', cgpa:3.88, mid:83, waiver:'20%', monthly:2000, paid:5200 },
+      { sem:'8th', cgpa:3.92, mid:87, waiver:'20%', monthly:2000, paid:5500 }
+    ]
+  },
+  {
+    id: 'KSPI-011-016',
+    name: 'Arif Kanto Das',
+    father: 'Jiban Chandra Das',
+    mother: 'Anita Rani Das',
+    phone: '01728312414',
+    gmail: 'arif16@gmail.com',
+    status: 'Active',
+    program: 'B.Sc in CSE (Regular)',
+    waiver: '65%',
+    cardNo: 'KSPI-011-010',
+    religion: 'Hindu',
+    gender: 'Male',
+    dob: '01 Jan 2003',
+    blood: 'O+',
+    nationality: 'Bangladeshi',
+    phoneGuardian: '01987654327',
+    nid: '1000000016',
+    birthCert: '2000000016',
+    sscYear: '2019',
+    session: '2022-23',
+    department: 'CSE',
+    programType: 'Diploma',
+    semester: '11th Semester',
+    admissionDate: '01 Jan 2024',
+    discount: '65%',
+    admissionFee: '6000 BDT',
+    semesterFee: '12000 BDT',
+    monthlyFee: '1000 BDT',
+    paymentMethod: 'Bank',
+    permAddress: 'House #18, Road #5, Barishal',
+    presAddress: 'Flat #307, ABC Tower, Barishal',
+    hostel: 'KSPI Boys Hostel, Room #18',
+    extra: 'Coding Competition',
+    statusNotes: 'Active',
+    currentSemester: '2025-11th Semester',
+    registration: 'Done',
+    semesters: [
+      { sem:'1st', cgpa:3.70, mid:75, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'2nd', cgpa:3.85, mid:82, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'3rd', cgpa:3.65, mid:78, waiver:'20%', monthly:2000, paid:4000 },
+      { sem:'4th', cgpa:3.80, mid:80, waiver:'20%', monthly:2000, paid:4500 },
+      { sem:'5th', cgpa:3.90, mid:85, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'6th', cgpa:3.75, mid:79, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'7th', cgpa:3.88, mid:83, waiver:'20%', monthly:2000, paid:5200 },
+      { sem:'8th', cgpa:3.92, mid:87, waiver:'20%', monthly:2000, paid:5500 }
+    ]
+  },
+  {
+    id: 'KSPI-011-017',
+    name: 'Nayan Kanto Das',
+    father: 'Bikash Chandra Das',
+    mother: 'Kalyani Rani Das',
+    phone: '01728312415',
+    gmail: 'nayan17@gmail.com',
+    status: 'Active',
+    program: 'B.Sc in CSE (Regular)',
+    waiver: '65%',
+    cardNo: 'KSPI-011-011',
+    religion: 'Hindu',
+    gender: 'Male',
+    dob: '02 Jan 2003',
+    blood: 'O+',
+    nationality: 'Bangladeshi',
+    phoneGuardian: '01987654328',
+    nid: '1000000017',
+    birthCert: '2000000017',
+    sscYear: '2019',
+    session: '2022-23',
+    department: 'CSE',
+    programType: 'Diploma',
+    semester: '11th Semester',
+    admissionDate: '01 Jan 2024',
+    discount: '65%',
+    admissionFee: '6000 BDT',
+    semesterFee: '12000 BDT',
+    monthlyFee: '1000 BDT',
+    paymentMethod: 'Bank',
+    permAddress: 'House #19, Road #5, Barishal',
+    presAddress: 'Flat #308, ABC Tower, Barishal',
+    hostel: 'KSPI Boys Hostel, Room #19',
+    extra: 'Coding Competition',
+    statusNotes: 'Active',
+    currentSemester: '2025-11th Semester',
+    registration: 'Done',
+    semesters: [
+      { sem:'1st', cgpa:3.70, mid:75, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'2nd', cgpa:3.85, mid:82, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'3rd', cgpa:3.65, mid:78, waiver:'20%', monthly:2000, paid:4000 },
+      { sem:'4th', cgpa:3.80, mid:80, waiver:'20%', monthly:2000, paid:4500 },
+      { sem:'5th', cgpa:3.90, mid:85, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'6th', cgpa:3.75, mid:79, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'7th', cgpa:3.88, mid:83, waiver:'20%', monthly:2000, paid:5200 },
+      { sem:'8th', cgpa:3.92, mid:87, waiver:'20%', monthly:2000, paid:5500 }
+    ]
+  },
+  {
+    id: 'KSPI-011-018',
+    name: 'Rafi Kanto Das',
+    father: 'Ramesh Chandra Das',
+    mother: 'Sushmita Rani Das',
+    phone: '01728312416',
+    gmail: 'rafi18@gmail.com',
+    status: 'Active',
+    program: 'B.Sc in CSE (Regular)',
+    waiver: '65%',
+    cardNo: 'KSPI-011-012',
+    religion: 'Hindu',
+    gender: 'Male',
+    dob: '03 Jan 2003',
+    blood: 'O+',
+    nationality: 'Bangladeshi',
+    phoneGuardian: '01987654329',
+    nid: '1000000018',
+    birthCert: '2000000018',
+    sscYear: '2019',
+    session: '2022-23',
+    department: 'CSE',
+    programType: 'Diploma',
+    semester: '11th Semester',
+    admissionDate: '01 Jan 2024',
+    discount: '65%',
+    admissionFee: '6000 BDT',
+    semesterFee: '12000 BDT',
+    monthlyFee: '1000 BDT',
+    paymentMethod: 'Bank',
+    permAddress: 'House #20, Road #5, Barishal',
+    presAddress: 'Flat #309, ABC Tower, Barishal',
+    hostel: 'KSPI Boys Hostel, Room #20',
+    extra: 'Coding Competition',
+    statusNotes: 'Active',
+    currentSemester: '2025-11th Semester',
+    registration: 'Done',
+    semesters: [
+      { sem:'1st', cgpa:3.70, mid:75, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'2nd', cgpa:3.85, mid:82, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'3rd', cgpa:3.65, mid:78, waiver:'20%', monthly:2000, paid:4000 },
+      { sem:'4th', cgpa:3.80, mid:80, waiver:'20%', monthly:2000, paid:4500 },
+      { sem:'5th', cgpa:3.90, mid:85, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'6th', cgpa:3.75, mid:79, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'7th', cgpa:3.88, mid:83, waiver:'20%', monthly:2000, paid:5200 },
+      { sem:'8th', cgpa:3.92, mid:87, waiver:'20%', monthly:2000, paid:5500 }
+    ]
+  },
+  {
+    id: 'KSPI-011-019',
+    name: 'Irfan Kanto Das',
+    father: 'Sujan Chandra Das',
+    mother: 'Manisha Rani Das',
+    phone: '01728312417',
+    gmail: 'irfan19@gmail.com',
+    status: 'Active',
+    program: 'B.Sc in CSE (Regular)',
+    waiver: '65%',
+    cardNo: 'KSPI-011-013',
+    religion: 'Hindu',
+    gender: 'Male',
+    dob: '04 Jan 2003',
+    blood: 'O+',
+    nationality: 'Bangladeshi',
+    phoneGuardian: '01987654330',
+    nid: '1000000019',
+    birthCert: '2000000019',
+    sscYear: '2019',
+    session: '2022-23',
+    department: 'CSE',
+    programType: 'Diploma',
+    semester: '11th Semester',
+    admissionDate: '01 Jan 2024',
+    discount: '65%',
+    admissionFee: '6000 BDT',
+    semesterFee: '12000 BDT',
+    monthlyFee: '1000 BDT',
+    paymentMethod: 'Bank',
+    permAddress: 'House #21, Road #5, Barishal',
+    presAddress: 'Flat #310, ABC Tower, Barishal',
+    hostel: 'KSPI Boys Hostel, Room #21',
+    extra: 'Coding Competition',
+    statusNotes: 'Active',
+    currentSemester: '2025-11th Semester',
+    registration: 'Done',
+    semesters: [
+      { sem:'1st', cgpa:3.70, mid:75, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'2nd', cgpa:3.85, mid:82, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'3rd', cgpa:3.65, mid:78, waiver:'20%', monthly:2000, paid:4000 },
+      { sem:'4th', cgpa:3.80, mid:80, waiver:'20%', monthly:2000, paid:4500 },
+      { sem:'5th', cgpa:3.90, mid:85, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'6th', cgpa:3.75, mid:79, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'7th', cgpa:3.88, mid:83, waiver:'20%', monthly:2000, paid:5200 },
+      { sem:'8th', cgpa:3.92, mid:87, waiver:'20%', monthly:2000, paid:5500 }
+    ]
+  },
+  
+  {
+    id: 'KSPI-011-020',
+    name: 'Jahid Kanto Das',
+    father: 'Ranjit Chandra Das',
+    mother: 'Soma Rani Das',
+    phone: '01728312418',
+    gmail: 'jahid20@gmail.com',
+    status: 'Active',
+    program: 'B.Sc in CSE (Regular)',
+    waiver: '65%',
+    cardNo: 'KSPI-011-014',
+    religion: 'Hindu',
+    gender: 'Male',
+    dob: '05 Jan 2003',
+    blood: 'O+',
+    nationality: 'Bangladeshi',
+    phoneGuardian: '01987654331',
+    nid: '1000000020',
+    birthCert: '2000000020',
+    sscYear: '2019',
+    session: '2022-23',
+    department: 'CSE',
+    programType: 'Diploma',
+    semester: '11th Semester',
+    admissionDate: '01 Jan 2024',
+    discount: '65%',
+    admissionFee: '6000 BDT',
+    semesterFee: '12000 BDT',
+    monthlyFee: '1000 BDT',
+    paymentMethod: 'Bank',
+    permAddress: 'House #22, Road #5, Barishal',
+    presAddress: 'Flat #311, ABC Tower, Barishal',
+    hostel: 'KSPI Boys Hostel, Room #22',
+    extra: 'Coding Competition',
+    statusNotes: 'Active',
+    currentSemester: '2025-11th Semester',
+    registration: 'Done',
+    semesters: [
+      { sem:'1st', cgpa:3.70, mid:75, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'2nd', cgpa:3.85, mid:82, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'3rd', cgpa:3.65, mid:78, waiver:'20%', monthly:2000, paid:4000 },
+      { sem:'4th', cgpa:3.80, mid:80, waiver:'20%', monthly:2000, paid:4500 },
+      { sem:'5th', cgpa:3.90, mid:85, waiver:'20%', monthly:2000, paid:5000 },
+      { sem:'6th', cgpa:3.75, mid:79, waiver:'20%', monthly:2000, paid:4800 },
+      { sem:'7th', cgpa:3.88, mid:83, waiver:'20%', monthly:2000, paid:5200 },
+      { sem:'8th', cgpa:3.92, mid:87, waiver:'20%', monthly:2000, paid:5500 }
+    ]
+  },
+  
+];
+
+
+
+function searchStudent(){
+    const searchId = document.getElementById('searchId').value.trim();
+    const student = students.find(s=>s.id===searchId);
+    if(!student){
+        alert('Student not found!');
+        return;
+    }
+    // Show header and sections
+    document.getElementById('headerCard').style.display='block';
+    document.getElementById('quickStats').style.display='flex';
+    document.getElementById('academicDetails').style.display='block';
+    document.getElementById('semesterResult').style.display='block';
+    document.getElementById('semesterAccounting').style.display='block';
+
+    // Fill Header
+    studentPhoto.src = './assets/student.png';
+    studentPhotoLarge.src = './assets/student.png';
+    document.getElementById('studentName').innerText = student.name;
+    document.getElementById('studentID').innerText = student.id;
+    document.getElementById('studentStatus').innerText = student.status;
+    document.getElementById('studentProgram').innerText = student.program;
+    document.getElementById('studentPhone').innerText = student.phone;
+    document.getElementById('studentGmail').innerText = student.gmail;
+    document.getElementById('studentWaiver').innerText = student.waiver;
+
+    // Quick Stats
+    document.getElementById('currentSemester').innerText = student.currentSemester;
+    document.getElementById('registrationStatus').innerText = student.registration;
+    document.getElementById('monthlyFee').innerText = student.monthlyFee;
+
+    // Academic Details
+    document.getElementById('cardNo').innerText = student.cardNo;
+    document.getElementById('fullName').innerText = student.name;
+    document.getElementById('fatherName').innerText = student.father;
+    document.getElementById('motherName').innerText = student.mother;
+    document.getElementById('religion').innerText = student.religion;
+    document.getElementById('gender').innerText = student.gender;
+    document.getElementById('dob').innerText = student.dob;
+    document.getElementById('bloodGroup').innerText = student.blood;
+    document.getElementById('nationality').innerText = student.nationality;
+    document.getElementById('phoneStudent').innerText = student.phone;
+    document.getElementById('phoneGuardian').innerText = student.phoneGuardian;
+    document.getElementById('nid').innerText = student.nid;
+    document.getElementById('birthCert').innerText = student.birthCert;
+    document.getElementById('gmail').innerText = student.gmail;
+    document.getElementById('sscYear').innerText = student.sscYear;
+    document.getElementById('session').innerText = student.session;
+    document.getElementById('department').innerText = student.department;
+    document.getElementById('programType').innerText = student.programType;
+    document.getElementById('semester').innerText = student.semester;
+    document.getElementById('admissionDate').innerText = student.admissionDate;
+    document.getElementById('discount').innerText = student.discount;
+    document.getElementById('admissionFee').innerText = student.admissionFee;
+    document.getElementById('semesterFee').innerText = student.semesterFee;
+    document.getElementById('monthlyFeeDetail').innerText = student.monthlyFee;
+    document.getElementById('paymentMethod').innerText = student.paymentMethod;
+    document.getElementById('permAddress').innerText = student.permAddress;
+    document.getElementById('presAddress').innerText = student.presAddress;
+    document.getElementById('hostelInfo').innerText = student.hostel;
+    document.getElementById('extraCurricular').innerText = student.extra;
+    document.getElementById('statusNotes').innerText = student.statusNotes;
+
+    // Semester-wise Result
+    const resultTbody = document.querySelector('#resultTable tbody');
+    resultTbody.innerHTML='';
+    let cgpaSum=0;
+    student.semesters.forEach(s=>{
+        cgpaSum+=s.cgpa;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${s.sem}</td><td>${s.cgpa.toFixed(2)}</td><td>
+        <div class="progress"><div class="progress-bar" style="width:${s.mid}%">${s.mid}%</div></div></td>`;
+        resultTbody.appendChild(tr);
+    });
+    document.getElementById('avgCgpa').innerText = (cgpaSum/student.semesters.length).toFixed(2);
+
+    // Accounting Table
+    const accountingTbody = document.querySelector('#accountingTable tbody');
+    accountingTbody.innerHTML='';
+    let totalPaid=0,totalDue=0;
+    student.semesters.forEach(s=>{
+        const due = Math.max(0,s.monthly - s.paid);
+        totalPaid+=s.paid;
+        totalDue+=due;
+        const tr=document.createElement('tr');
+        tr.innerHTML = `<td>${s.sem}</td><td>${s.waiver}</td><td>${s.monthly} BDT</td><td>${s.paid} BDT</td><td>${due} BDT</td>`;
+        accountingTbody.appendChild(tr);
+    });
+    document.getElementById('totalPaid').innerText=totalPaid+' BDT';
+    document.getElementById('totalDue').innerText=totalDue+' BDT';
+}
+</script>
+
+<!-- Emergency Hotline Section -->
+    <div class="mb-4">
+      <img src="./img/gov_hotline-min (1).jpg" alt="Emergency Hotline" class="img-fluid rounded shadow" style="max-height: 300px;" />
+    </div>
+<footer class="bg-dark text-white pt-4">
+  <div class="container">
+    <div class="row">
+
+      <!-- Contact Info -->
+      <div class="col-md-3 mb-4">
+        <h5>Contact Us</h5>
+        <p><strong>Address:</strong> Kirtankhola Survey & Polytechnic Institute,Barishal.</p>
+        <p><strong>Phone:</strong> +8801728312408</p>
+        <p><strong>Email:</strong> 
+          <a href="mailto:dipto2512@gmail.com" class="text-white">dipto2512@gmail.com</a>
+        </p>
+      </div>
+
+      <!-- Useful Links -->
+      <div class="col-md-3 mb-4">
+        <h5>Useful Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-white">Admission</a></li>
+          <li><a href="#" class="text-white">Faculty</a></li>
+          <li><a href="#" class="text-white">Location</a></li>
+        </ul>
+      </div>
+
+      <!-- Map -->
+      <div class="col-md-3 mb-4">
+        <h5>Location</h5>
+        <div class="ratio ratio-4x3">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3680.3344414410967!2d90.33776917385485!3d22.71580742770926!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x375537dc29b0c1a1%3A0x635ffa79b514d0ea!2z4KaV4KeA4Kaw4KeN4Kak4Kao4KaW4KeL4Kay4Ka-IOCmuOCmvuCmsOCnjeCmreCnhyAmIOCmquCmsuCmv-Cmn-Cnh-CmleCmqOCmv-CmlSDgpofgpqjgprjgp43gpp_gpr_gpp_gpr_gpongpp8!5e0!3m2!1sbn!2sbd!4v1746115245054!5m2!1sbn!2sbd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+
+      <!-- Social Links -->
+      <div class="col-md-3 mb-4">
+        <h5>Follow Us</h5>
+        <ul class="list-unstyled d-flex gap-3 social-icons flex-wrap">
+          <li><a href="#" target="_blank" class="text-white" title="Facebook"><i class="fab fa-facebook fa-lg"></i></a></li>
+          <li><a href="#" target="_blank" class="text-white" title="YouTube"><i class="fab fa-youtube fa-lg"></i></a></li>
+          <li><a href="#" target="_blank" class="text-white" title="Instagram"><i class="fab fa-instagram fa-lg"></i></a></li>
+          <li><a href="3" target="_blank" class="text-white" title="LinkedIn"><i class="fab fa-linkedin fa-lg"></i></a></li>
+          <li><a href="#" target="_blank" class="text-white" title="Twitter"><i class="fab fa-twitter fa-lg"></i></a></li>
+          <li><a href="#" target="_blank" class="text-white" title="Telegram"><i class="fab fa-telegram fa-lg"></i></a></li>
+          <li><a href="https://wa.me/8801XXXXXXXXX" target="_blank" class="text-white" title="WhatsApp"><i class="fab fa-whatsapp fa-lg"></i></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Footer -->
+    <div class="footer-bottom border-top">
+      <div class="row align-items-center">
+        <div class="col-md-12 text-center ">
+          <p class="mb-0">&copy; 2025 Kirtankhola Survey & Polytechnic Institute,Barishal.</p>
+        </div>
+        <div class="col-md-12 text-center ">
+          <small>Developed by <strong>Dipto-Das</strong></small>
+        </div>
+      </div>
+    </div>
+    
+</footer>
+
+<!-- Font Awesome CDN -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+</body>
+</html>
