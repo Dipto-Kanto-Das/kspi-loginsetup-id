@@ -1,38 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KSPI-Kirtankhola Survey & Polytechnic Institute</title>
-  <link rel="shortcut icon" href="./img/ok-icon.png" type="image/x-icon" />
-  <link rel="stylesheet" href="style.css" />
-
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-</head>
-
-<body>
-  <!-- Header Section -->
-  <div class="container-fluid bg-success bg-opacity-10 py-2">
-    <div class="container">
-      <div class="row align-items-center text-center text-md-start">
-        <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start align-items-center mb-2 mb-md-0">
-          <a href="index.html" class="me-2"><img src="./img/kspi.png" alt="Logo 1" height="60" /></a>
-          <a href="index.html"><img src="./img/logo-1.png" alt="Logo 2" height="60" /></a>
-        </div>
-        <div class="col-12 col-md-5 mb-2 mb-md-0">
-          <h3 class="had-p m-0 fw-semibold text-danger">৪ বছর মেয়াদী ডিপ্লোমা ইন ইঞ্জিনিয়ারিং কোর্সে ভর্তি চলিতেছে</h3>
-        </div>
-        <div class="col-12 col-md-3 text-center text-md-end">
-          <a class="btn btn-primary" href="apply.html">Apply Now</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Navigation Bar -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KSPI Student Search</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+   <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
   <div class="container">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -62,275 +37,104 @@
     <section class="bg-warning py-2">
         <div class="container">
           <marquee behavior="scroll" direction="left" scrollamount="5" class="fw-bold fs-6 text-dark" onmouseover="this.stop()" onmouseout="this.start()">
-            <img src="./img/kspi.png" alt="Book Icon" style="height: 36px;  margin-right: 10px;">
+            <img src="./img/logo-chang.png" alt="Book Icon" style="height: 36px;  margin-right: 10px;">
             "KSPI তে আপনাকে  স্বাগতম এবং আমাদের সাথে যুক্ত হওয়ার জন্য ধন্যবাদ। ভর্তি সংক্রান্ত যেকোনো তথ্যের জন্য,যোগাযোগ করুনঃ-স্থানঃ ফিশারি রোড, বরিশাল,ফোনঃ 01728312408, ই-মেইলঃ dipto2512@gmail.com"
           </marquee>
         </div>
       </section>
-  <h2>Student-List</h2>
-  <!-- Search Bar -->
-  <div class="container text-center my-5">
-    <div class="row justify-content-center">
-      <div class="col-md-6 col-sm-8 col-10">
-        <div class="input-group mb-4">
-          <input type="text" id="searchInput" class="form-control" placeholder="Search By Name Or Rroll" onkeyup="searchStudent()" />
-          <button class="btn btn-primary rounded-custom" type="button">Search</button>
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+  <!-- Search Box -->
+  <div class="mb-4 d-flex justify-content-center">
+    <div class="p-3 bg-white rounded-3 shadow-sm d-flex align-items-center gap-3" style="min-width: 400px;">
+      <input type="text" id="searchId" class="form-control rounded-pill" placeholder="Enter Student ID">
+      <button class="btn btn-primary rounded-pill px-4" onclick="searchStudent()">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Student Info Card -->
+<div class="d-flex justify-content-center">
+  <div class="card shadow-sm mb-4" id="studentCard" style="display:none; max-width: 500px; width: 100%;">
+    <div class="card-body text-center">
+      <div class="d-flex flex-column align-items-center">
+        <img id="studentPhoto" class="avatar-xl shadow-sm mb-3" src="./img/CST.jpg" alt="Student Photo">
+        <div class="col">
+          <h5 id="studentName" class="mb-1"></h5>
+          <p class="mb-1"><strong>ID:</strong> <span id="studentId"></span></p>
+          <p class="mb-1"><strong>Father:</strong> <span id="studentFather"></span></p>
+          <p class="mb-1"><strong>Mother:</strong> <span id="studentMother"></span></p>
+          <p class="mb-0"><strong>Department:</strong> <span id="studentDept"></span></p>
         </div>
       </div>
     </div>
   </div>
-  <!-- Student Cards -->
-  <div id="studentList">
-    <!-- Example Student Card -->
-    <div class="student-card card mb-3 mx-auto" style="max-width: 540px;">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img src="./img/kspi.png" class="img-fluid rounded-start" alt="Institute Image">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">Jihad</h5>
-            <p>Kirtankhola Survey and Polytechnic Institute</p>
-            <h6>Roll: 100007</h6>
-            <h6>Father's Name: Jasim Uddin</h6>
-            <h6>Mother's Name: Razia Sultana</h6>
-            <h6>Dept: SUR</h6>
-            <button class="btn btn-primary mt-2">Details</button>
-          </div>
-        </div>
-      </div>
+</div>
+
+  <!-- Not Found Alert -->
+  <div class="alert alert-danger d-none" id="notFound">❌ Student not found!</div>
+</div>
+
+<script>
+const students = [
+  {id: "KSPI-011-010", name: "Jihad", fatherName: "Jasim Uddin", motherName: "Razia Sultana", dept: "SUR"},
+  {id: "KSPI-011-011", name: "Simun Khan", fatherName: "######", motherName: "######", dept: "SUR"},
+  {id: "KSPI-011-012", name: "Shahriar Rahman", fatherName: "######", motherName: "######", dept: "SUR"},
+  {id: "KSPI-011-013", name: "Taposh", fatherName: "######", motherName: "######", dept: "SUR"},
+  {id: "KSPI-011-014", name: "Apon", fatherName: "######", motherName: "######", dept: "Civil"},
+  {id: "KSPI-011-015", name: "Saraf", fatherName: "######", motherName: "######", dept: "Civil"},
+  {id: "KSPI-011-016", name: "Shakib", fatherName: "######", motherName: "######", dept: "Civil"},
+  {id: "KSPI-011-017", name: "Jinia", fatherName: "######", motherName: "######", dept: "CST"},
+  {id: "KSPI-011-018", name: "Sorup", fatherName: "######", motherName: "######", dept: "CST"},
+  {id: "KSPI-011-019", name: "Zahid Islam", fatherName: "######", motherName: "######", dept: "SUR"},
+  {id: "KSPI-011-020", name: "Nadim", fatherName: "######", motherName: "######", dept: "SUR"},
+  {id: "KSPI-011-021", name: "Tanvir", fatherName: "######", motherName: "######", dept: "CST"},
+  {id: "KSPI-011-022", name: "Anika", fatherName: "######", motherName: "######", dept: "Civil"},
+  {id: "KSPI-011-023", name: "Rafi", fatherName: "######", motherName: "######", dept: "CST"},
+  {id: "KSPI-011-024", name: "Mim", fatherName: "######", motherName: "######", dept: "SUR"},
+  {id: "KSPI-011-025", name: "Shuvo", fatherName: "######", motherName: "######", dept: "Civil"},
+  {id: "KSPI-011-026", name: "Tonmoy", fatherName: "######", motherName: "######", dept: "CST"},
+  {id: "KSPI-011-027", name: "Sadia", fatherName: "######", motherName: "######", dept: "Civil"},
+  {id: "KSPI-011-028", name: "Rasel", fatherName: "######", motherName: "######", dept: "SUR"},
+  {id: "KSPI-011-029", name: "Puja", fatherName: "######", motherName: "######", dept: "CST"},
+  {id: "KSPI-011-030", name: "Badhon", fatherName: "######", motherName: "######", dept: "Civil"},
+  {id: "KSPI-011-031", name: "Mehedi", fatherName: "######", motherName: "######", dept: "CST"},
+  {id: "KSPI-011-032", name: "Shila", fatherName: "######", motherName: "######", dept: "Civil"},
+  {id: "KSPI-011-033", name: "Rimon", fatherName: "######", motherName: "######", dept: "SUR"},
+  {id: "KSPI-011-034", name: "Tuhin", fatherName: "######", motherName: "######", dept: "CST"},
+  {id: "KSPI-011-035", name: "Sumaiya", fatherName: "######", motherName: "######", dept: "Civil"}
+];
+
+function searchStudent() {
+  const id = document.getElementById("searchId").value.trim();
+  const student = students.find(s => s.id === id);
+
+  const card = document.getElementById("studentCard");
+  const notFound = document.getElementById("notFound");
+
+  if (student) {
+    document.getElementById("studentName").innerText = student.name;
+    document.getElementById("studentId").innerText = student.id;
+    document.getElementById("studentFather").innerText = student.fatherName;
+    document.getElementById("studentMother").innerText = student.motherName;
+    document.getElementById("studentDept").innerText = student.dept;
+    document.getElementById("studentPhoto").src = "./img/" + student.id + ".jpg"; // আলাদা ছবি থাকলে student ID দিয়ে নাম দাও
+
+    card.style.display = "block";
+    notFound.classList.add("d-none");
+  } else {
+    card.style.display = "none";
+    notFound.classList.remove("d-none");
+  }
+}
+</script>
+<!-- Emergency Hotline Section -->
+    <div class="mb-4">
+      <img src="./img/gov_hotline-min (1).jpg" alt="Emergency Hotline" class="img-fluid rounded shadow" style="max-height: 300px;" />
     </div>
-
-    <!-- More Student Cards here... -->
-
-  </div>
-
-  <!-- JS Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // Student Data Array
-    const students = [
-      {
-        name: "Jihad",
-        roll: "100007",
-        fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-      },
-      {
-        name: "Simun Khan",
-        roll: "100008",
-        fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-      },
-      {
-        name: "Shahriar Rahman",
-        roll: "100009",
-        fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-      },
-      {
-          name: "Taposh",
-          roll: "Roll: 100010",
-          fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-     },
-     {
-          name: "Apon",
-          roll: "Roll: 1000029",
-          fatherName: "######",
-        motherName: "######",
-        dept: "Civil",
-     },
-     {
-          name: "Saraf",
-          roll: "Roll: 1000039",
-          fatherName: "######",
-        motherName: "######",
-        dept: "Civil",
-     },
-     {
-          name: "Shakib",
-          roll: "Roll: 1000019",
-          fatherName: "######",
-        motherName: "######",
-        dept: "Civil",
-     },
-     {
-          name: "Jinia",
-          roll: "Roll: 1000059",
-          fatherName: "######",
-        motherName: "######",
-        dept: "CST",
-     },
-     {
-          name: "Sorup",
-          roll: "Roll: 1000029",
-          fatherName: "######",
-        motherName: "######",
-        dept: "CST",
-     },
-     {
-          name: "Zahid Islam",
-          roll: "Roll: 1000309",
-          fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-     },
-     {
-          name: "Rakib Islam",
-          roll: "Roll: 1020309",
-          fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-     },
-     {
-          name: "Shakib Islam",
-          roll: "Roll: 1030309",
-          fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-     },
-     {
-          name: "Rutu",
-          roll: "Roll: 1100309",
-          fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-     },
-     {
-          name: "Paranto Das",
-          roll: "Roll: 1022319",
-          fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-     },
-     {
-          name: "Bappy Das",
-          roll: "Roll: 1420309",
-          fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-     },
-     {
-          name: "Pisha",
-          roll: "Roll: 1120309",
-          fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-     },
-     {
-          name: "Sujon",
-          roll: "Roll: 1042509",
-          fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-     },
-     {
-          name: "Hasan Islam",
-          roll: "Roll: 1005509",
-          fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-     },
-     {
-          name: "Rhakib Khan",
-          roll: "Roll: 1033309",
-          fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-     },
-     {
-          name: "Torikul ",
-          roll: "Roll: 100429",
-          fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-     },
-     {
-          name: "ASSw",
-          roll: "Roll: 108809",
-          fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-     },
-     {
-          name: "Islam",
-          roll: "Roll: 100759",
-          fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-     },
-     {
-          name: "Zahid ",
-          roll: "Roll: 1820309",
-          fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-     },
-     {
-          name: "Jannatul",
-          roll: "Roll: 134209",
-          fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-     },
-     {
-          name: "Shukla",
-          roll: "Roll: 1088709",
-          fatherName: "######",
-        motherName: "######",
-        dept: "SUR",
-     },
-
-      // Add more student objects as needed
-    ];
-
-    // Function to search students based on name or roll number
-    function searchStudent() {
-      const query = document.getElementById("searchInput").value.toLowerCase();
-      const filteredStudents = students.filter(student => 
-        student.name.toLowerCase().includes(query) || 
-        student.roll.includes(query)
-      );
-      displayStudents(filteredStudents);
-    }
-
-    // Function to display filtered students
-    function displayStudents(students) {
-      const studentListDiv = document.getElementById("studentList");
-      studentListDiv.innerHTML = ""; // Clear existing student cards
-      students.forEach(student => {
-        const card = `
-          <div class="student-card card mb-3 mx-auto" style="max-width: 540px;">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img src="./img/kspi.png" class="img-fluid rounded-start" alt="Institute Image">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">${student.name}</h5>
-                  <p>Kirtankhola Survey and Polytechnic Institute</p>
-                  <h6>Roll: ${student.roll}</h6>
-                  <h6>Father's Name: ${student.fatherName}</h6>
-                  <h6>Mother's Name: ${student.motherName}</h6>
-                  <h6>Dept: ${student.dept}</h6>
-                  <button class="btn btn-primary mt-2">Details</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-        studentListDiv.innerHTML += card;
-      });
-    }
-
-    // Initially display all students
-    displayStudents(students);
-  </script>
 <footer class="bg-dark text-white pt-4">
   <div class="container">
     <div class="row">
@@ -338,7 +142,7 @@
       <!-- Contact Info -->
       <div class="col-md-3 mb-4">
         <h5>Contact Us</h5>
-        <p><strong>Address:</strong> Kirtankhola Survey & Polytechnic Institute.</p>
+        <p><strong>Address:</strong> Kirtankhola Survey & Polytechnic Institute,Barishal.</p>
         <p><strong>Phone:</strong> +8801728312408</p>
         <p><strong>Email:</strong> 
           <a href="mailto:dipto2512@gmail.com" class="text-white">dipto2512@gmail.com</a>
@@ -382,16 +186,18 @@
     <div class="footer-bottom border-top">
       <div class="row align-items-center">
         <div class="col-md-12 text-center ">
-          <p class="mb-0">&copy; 2025 Kirtankhola Survey & Polytechnic Institute.</p>
+          <p class="mb-0">&copy; 2025 Kirtankhola Survey & Polytechnic Institute,Barishal.</p>
         </div>
         <div class="col-md-12 text-center ">
           <small>Developed by <strong>Dipto-Das</strong></small>
         </div>
       </div>
     </div>
+    
 </footer>
 
-
+<!-- Font Awesome CDN -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 </body>
 </html>
