@@ -11,7 +11,26 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  body { background:#f4f6f8; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+  .cv-container { max-width:900px; margin:28px auto; background:white; box-shadow:0 6px 20px rgba(0,0,0,0.06); border-radius:6px; overflow:hidden;}
+  .cv-header { padding:22px 24px; display:flex; gap:18px; align-items:center; border-bottom:1px solid #eee; }
+  .avatar { width:96px; height:96px; border-radius:8px; object-fit:cover; border:2px solid #e9ecef; }
+  .cv-name { font-weight:700; font-size:20px; margin-bottom:6px; color:#0b3b6f; }
+  .cv-sub { color:#556; font-size:13px; }
+  .cv-section { padding:18px 24px; border-bottom:1px solid #f1f1f1; }
+  .section-title { font-weight:700; font-size:14px; color:#17324d; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;}
+  .muted { color:#6b7280; font-size:13px; }
+  table.cv-table { width:100%; }
+  table.cv-table th { width:220px; font-weight:600; background:transparent; border-top:0; color:#333; vertical-align:top; padding:8px 12px; }
+  table.cv-table td { padding:8px 12px; color:#222; }
+  .small-muted { color:#6b7280; font-size:12px; }
+  .searchbar { display:flex; gap:8px; }
+  .no-data { color:#8b8b8b; font-style:italic; }
+  .badge-id { background:linear-gradient(90deg,#c585ed,#abe797); color:#0b3b6f; font-weight:600; padding:6px 8px; border-radius:6px; }
+  @media (max-width:576px){ .cv-header { flex-direction:column; align-items:flex-start; gap:12px } .avatar{width:84px;height:84px}}
 
+</style>
 </head>
 
 <body>
@@ -60,6 +79,437 @@
 
 
   <!-- Navigation End -->
+
+
+<title>KSPI Student Dashboard — CV Style</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+<div class="container py-4">
+  <div class="d-flex justify-content-center mb-3">
+    <div class="w-100" style="max-width:900px;">
+      <div class="input-group">
+        <input id="searchId" class="form-control" placeholder="Search Student ID (e.g. KSPI-011-010)" />
+        <button class="btn btn-primary" onclick="searchStudent()"><i class="bi bi-search"></i> Search</button>
+        <button class="btn btn-outline-secondary" onclick="resetView()">Reset</button>
+      </div>
+      <div class="text-end mt-2 small-muted">Type full ID and press Search</div>
+    </div>
+  </div>
+
+  <div class="cv-container" id="cvRoot" style="display:none;">
+
+    <!-- Header -->
+    <div class="cv-header">
+      <img id="cvPhoto" src="" alt="photo" class="avatar" />
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <div>
+            <div class="cv-name" id="cvName">Name Here</div>
+            <div class="cv-sub" id="cvProgram">Program • Department</div>
+          </div>
+          <div style="margin-left:auto;text-align:right">
+            <div class="badge-id" id="cvId">ID</div>
+            <div class="small-muted" id="cvStatus" style="margin-top:6px;">Status</div>
+          </div>
+        </div>
+
+        <div class="mt-3 d-flex gap-3 flex-wrap muted" id="cvContacts">
+          <!-- phone, gmail, address etc -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Employment History -->
+    <div class="cv-section" id="employmentSection">
+      <div class="section-title">
+        <div>Employment History</div>
+        <div class="small-muted" id="experienceTotal"></div>
+      </div>
+      <div id="employmentBody" class="muted">
+        <div class="no-data">No employment history available.</div>
+      </div>
+    </div>
+
+    <!-- Academic Qualification -->
+    <div class="cv-section">
+      <div class="section-title">Academic Qualification</div>
+      <div id="academicBody">
+        <table class="cv-table">
+          <tbody id="academicTable">
+            <!-- filled by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Training Summary -->
+    <div class="cv-section">
+      <div class="section-title">Training Summary</div>
+      <div id="trainingBody" class="muted">
+        <div class="no-data">No training summary available.</div>
+      </div>
+    </div>
+
+    <!-- Professional Qualification -->
+    <div class="cv-section">
+      <div class="section-title">Professional Qualification</div>
+      <div id="professionalBody" class="muted">
+        <div class="no-data">No professional qualification available.</div>
+      </div>
+    </div>
+
+    <!-- Career and Application Info -->
+    <div class="cv-section">
+      <div class="section-title">Career & Application Information</div>
+      <div id="careerBody">
+        <table class="cv-table">
+          <tbody>
+            <tr><th>Present Salary</th><td id="careerSalary">-</td></tr>
+            <tr><th>Preferred Job Category</th><td id="careerPref">-</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="cv-section">
+      <div class="section-title">Skill</div>
+      <div id="skillBody" class="muted">
+        <div class="no-data">No skills listed.</div>
+      </div>
+    </div>
+
+    <!-- Personal Details -->
+    <div class="cv-section">
+      <div class="section-title">Personal Details</div>
+      <div id="personalBody">
+        <table class="cv-table">
+          <tbody id="personalTable">
+            <!-- filled by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- References -->
+    <div class="cv-section">
+      <div class="section-title">Reference(s)</div>
+      <div id="referenceBody" class="muted">
+        <div class="no-data">No references available.</div>
+      </div>
+    </div>
+
+    <!-- Footer actions -->
+    <div class="cv-section" style="display:flex;justify-content:space-between;align-items:center">
+      <div class="small-muted">KSPI Student Dashboard — CV view</div>
+      <div>
+        <button class="btn btn-outline-secondary btn-sm" onclick="window.print()"><i class="bi bi-printer"></i> Print</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ===========================
+   Sample students dataset
+   =========================== */
+const students = [
+  // Student 1 (detailed example)
+  {
+    id: 'KSPI-011-010',
+    name: 'Dipto Kanto Das',
+    father: 'Narayan Chandra Das',
+    mother: 'Laxmi Rani Das',
+    phone: '01728312408',
+    phoneAlt: '01855607348',
+    gmail: 'dipto2512@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/dipto-kanto-das',
+    github: 'https://github.com/Dipto-Kanto-Das',
+    program: 'Diploma — Computer Technology',
+    department: 'CSE',
+    status: 'Active',
+    waiver: '65%',
+    cardNo: 'KSPI-011-004',
+    religion: 'Hindu',
+    gender: 'Male',
+    dob: '25 Dec 2002',
+    blood: 'O+',
+    nationality: 'Bangladeshi',
+    permAddress: 'Monirabad, Bakerganj, Barishal',
+    presAddress: 'Flat #301, ABC Tower, Barishal',
+    city: 'Barishal',
+    postalCode: '8200',
+    sscYear: '2019',
+    session: '2022-23',
+    admissionDate: '01 Jan 2024',
+    discount: '65%',
+    admissionFee: '6000 BDT',
+    semesterFee: '12000 BDT',
+    monthlyFee: '1000 BDT',
+    paymentMethod: 'Bank',
+    hostel: 'KSPI Boys Hostel, Room #12',
+    extra: 'Coding Competition',
+    statusNotes: 'Active student',
+    currentSemester: '11th Semester (2025)',
+    registration: 'Done',
+    gpa: '3.85',
+    scholarship: 'Yes',
+    feePaid: '50000 BDT',
+    feeDue: '0 BDT',
+    employment: [
+      { title:'IT Officer', org:'Kirtankhola Survey and Polytechnic Institute, Barishal', from:'26 Mar 2025', to:'Continuing', desc:'IT Support (0.5 yr)' },
+      { title:'Physics Instructor (Also IT Officer at KSPI)', org:'Kirtankhola Survey and Polytechnic Institute, Barishal', from:'19 Feb 2025', to:'Continuing', desc:'' }
+    ],
+    academics: [
+      { exam:'HSC', group:'Science', institute:'Abul Hossain College', result:'Pass', year:2021 },
+      { exam:'SSC', group:'Science', institute:'XYZ High School', result:'Pass', year:2019 }
+    ],
+    trainings: [
+      { title:'Web Design & Development', topics:'HTML, CSS, JavaScript, Bootstrap', institute:'PSTU', country:'Bangladesh', location:'Barishal', year:2024, duration:'80 hours' }
+    ],
+    professional: [
+      { cert:'Web Development Certification', institute:'PSTU', location:'Barishal', from:'Aug 1, 2024', to:'Oct 31, 2024' }
+    ],
+    career: { presentSalary:'Tk. 15000', prefCategory:'IT/Telecommunication' },
+    skills: ['Web Developer', 'Web Designer', 'HTML', 'CSS', 'JavaScript'],
+    personal: {
+      maritalStatus:'Single',
+      fatherName:'Narayan Chandra Das',
+      motherName:'Laxmi Rani Das',
+      bloodGroup:'O+',
+      religion:'Hindu',
+      nationalId:'1000000010',
+      birthCert:'2000000010',
+      presentAddress:'Flat #301, ABC Tower, Barishal'
+    },
+    references: [
+      { name:'Engr. Md. Shamsher Ali', org:'Barisal Polytechnic Institute', designation:'Retired Electrical Instructor (CI)', mobile:'+8801712558846' }
+    ],
+    photo: '' // leave blank to use fallback
+  },
+
+  // Student 2
+  {
+    id:'KSPI-011-011',
+    name:'Paranto Kanto Das',
+    father:'Narayan Chandra Das',
+    mother:'Laxmi Rani Das',
+    phone:'01728312409',
+    gmail:'paranto11@gmail.com',
+    program:'Diploma — Computer Technology',
+    department:'CSE',
+    status:'Active',
+    sscYear:'2019',
+    session:'2022-23',
+    admissionDate:'01 Jan 2024',
+    semesters:[
+      {sem:'1st', cgpa:3.70, mid:75},
+      {sem:'2nd', cgpa:3.85, mid:82}
+    ],
+    personal:{ fatherName:'Narayan Chandra Das', motherName:'Laxmi Rani Das', nationalId:'1000000011' }
+  },
+
+  // Student 3
+  {
+    id:'KSPI-011-012',
+    name:'Ananto Kumar Das',
+    father:'Ramesh Chandra Das',
+    mother:'Sunita Rani Das',
+    phone:'01728312410',
+    gmail:'ananto12@gmail.com',
+    program:'Diploma — Computer Technology',
+    department:'CSE',
+    status:'Active',
+    sscYear:'2019',
+    session:'2022-23',
+    admissionDate:'01 Jan 2024',
+    semesters:[
+      {sem:'1st', cgpa:3.70, mid:75},
+      {sem:'2nd', cgpa:3.85, mid:82}
+    ],
+    personal:{ fatherName:'Ramesh Chandra Das', motherName:'Sunita Rani Das', nationalId:'1000000012' }
+  },
+
+  // You can append more student objects here (copied from your earlier dataset)
+];
+
+
+/* ===========================
+   Helper functions to render CV
+   =========================== */
+const cvRoot = document.getElementById('cvRoot');
+
+function searchStudent() {
+  const q = document.getElementById('searchId').value.trim();
+  if(!q){ alert('Please enter a Student ID (e.g. KSPI-011-010)'); return; }
+  const s = students.find(x=> x.id === q);
+  if(!s){ alert('Student not found. Check ID and try again.'); return; }
+  renderStudent(s);
+}
+
+function resetView(){
+  document.getElementById('searchId').value = '';
+  cvRoot.style.display = 'none';
+}
+
+/* Render the student into CV layout */
+function renderStudent(s){
+  cvRoot.style.display = 'block';
+  // header
+  document.getElementById('cvName').innerText = s.name || '-';
+  document.getElementById('cvId').innerText = s.id || '-';
+  document.getElementById('cvProgram').innerText = (s.program ? s.program + ' • ' : '') + (s.department || '');
+  document.getElementById('cvStatus').innerText = s.status || '';
+  // photo
+  const photoEl = document.getElementById('cvPhoto');
+  if(s.photo && s.photo.length) photoEl.src = s.photo;
+  else photoEl.src = 'https://via.placeholder.com/160x160.png?text=Photo';
+  // contacts
+  let contactsHtml = '';
+  if(s.phone) contactsHtml += `<div><i class="bi bi-telephone"></i> ${s.phone}</div>`;
+  if(s.phoneAlt) contactsHtml += `<div><i class="bi bi-phone"></i> ${s.phoneAlt}</div>`;
+  if(s.gmail) contactsHtml += `<div><i class="bi bi-envelope"></i> ${s.gmail}</div>`;
+  if(s.linkedin) contactsHtml += `<div><i class="bi bi-link-45deg"></i> <a href="${s.linkedin}" target="_blank">${s.linkedin}</a></div>`;
+  if(s.github) contactsHtml += `<div><i class="bi bi-github"></i> <a href="${s.github}" target="_blank">${s.github}</a></div>`;
+  if(s.presAddress) contactsHtml += `<div><i class="bi bi-geo-alt"></i> ${s.presAddress}</div>`;
+  document.getElementById('cvContacts').innerHTML = contactsHtml || '<span class="no-data">No contact info</span>';
+
+  // Employment
+  const empBody = document.getElementById('employmentBody');
+  if(s.employment && s.employment.length){
+    empBody.innerHTML = '';
+    s.employment.forEach((e,idx)=>{
+      const node = document.createElement('div');
+      node.style.marginBottom = '12px';
+      node.innerHTML = `<div style="font-weight:700">${idx+1}. ${e.title} <span class="small-muted">(${e.from} — ${e.to})</span></div>
+                        <div class="muted">${e.org}</div>
+                        ${e.desc?`<div style="margin-top:6px">${e.desc}</div>`:''}`;
+      empBody.appendChild(node);
+    });
+    // total experience (simple heuristic)
+    document.getElementById('experienceTotal').innerText = `Total Positions: ${s.employment.length}`;
+  } else {
+    empBody.innerHTML = '<div class="no-data">No employment history available.</div>';
+    document.getElementById('experienceTotal').innerText = '';
+  }
+
+  // Academic Qualification
+  const academicTable = document.getElementById('academicTable');
+  academicTable.innerHTML = '';
+  if(s.academics && s.academics.length){
+    s.academics.forEach(a=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<th>${a.exam}</th><td>
+                        <div><strong>Institute:</strong> ${a.institute || '-'}</div>
+                        <div class="small-muted">Group: ${a.group||'-'} • Result: ${a.result||'-'} • Year: ${a.year||'-'}</div>
+                      </td>`;
+      academicTable.appendChild(tr);
+    });
+  } else {
+    // fallback to show SSC / session / sscYear if present
+    if(s.sscYear || s.session || s.department){
+      academicTable.innerHTML = `<tr><th>SSC Year</th><td>${s.sscYear || '-'}</td></tr>
+        <tr><th>Session</th><td>${s.session || '-'}</td></tr>
+        <tr><th>Department</th><td>${s.department || '-'}</td></tr>`;
+    } else {
+      academicTable.innerHTML = '<tr><td class="no-data">No academic records available.</td></tr>';
+    }
+  }
+
+  // Training Summary
+  const trainingBody = document.getElementById('trainingBody');
+  if(s.trainings && s.trainings.length){
+    trainingBody.innerHTML = '';
+    s.trainings.forEach(t=>{
+      const div = document.createElement('div');
+      div.style.marginBottom = '10px';
+      div.innerHTML = `<div style="font-weight:700">${t.title} <span class="small-muted">(${t.year || '-'})</span></div>
+                       <div class="muted">${t.topics || ''} ${t.institute? ' — ' + t.institute : ''}</div>`;
+      trainingBody.appendChild(div);
+    });
+  } else {
+    trainingBody.innerHTML = '<div class="no-data">No training summary available.</div>';
+  }
+
+  // Professional Qualification
+  const profBody = document.getElementById('professionalBody');
+  if(s.professional && s.professional.length){
+    profBody.innerHTML = '';
+    s.professional.forEach(p=>{
+      const div = document.createElement('div');
+      div.style.marginBottom = '10px';
+      div.innerHTML = `<div style="font-weight:700">${p.cert || '-'}</div>
+                       <div class="muted">${p.institute || '-'} • ${p.location || ''} <span class="small-muted">(${p.from || ''} — ${p.to || ''})</span></div>`;
+      profBody.appendChild(div);
+    });
+  } else {
+    profBody.innerHTML = '<div class="no-data">No professional qualification available.</div>';
+  }
+
+  // Career & Application
+  document.getElementById('careerSalary').innerText = (s.career && s.career.presentSalary) ? s.career.presentSalary : (s.presentSalary || '-');
+  document.getElementById('careerPref').innerText = (s.career && s.career.prefCategory) ? s.career.prefCategory : (s.prefCategory || '-');
+
+  // Skills
+  const skillBody = document.getElementById('skillBody');
+  if(s.skills && s.skills.length){
+    skillBody.innerHTML = s.skills.map(x=>`<span class="badge bg-light text-dark me-1 mb-1">${x}</span>`).join(' ');
+  } else {
+    skillBody.innerHTML = '<div class="no-data">No skills listed.</div>';
+  }
+
+  // Personal Details table
+  const personalTable = document.getElementById('personalTable');
+  personalTable.innerHTML = '';
+  const p = s.personal || {};
+  const personalRows = [
+    ['Father\'s Name', p.fatherName || s.father || '-'],
+    ['Mother\'s Name', p.motherName || s.mother || '-'],
+    ['Date of Birth', s.dob || '-'],
+    ['Gender', s.gender || '-'],
+    ['Marital Status', p.maritalStatus || '-'],
+    ['Nationality', s.nationality || '-'],
+    ['Religion', s.religion || '-'],
+    ['Blood Group', s.blood || s.bloodGroup || '-'],
+    ['National ID', p.nationalId || s.nid || '-'],
+    ['Birth Cert No', s.birthCert || '-'],
+    ['Present Address', s.presAddress || p.presentAddress || '-'],
+    ['Permanent Address', s.permAddress || s.permanentAddress || '-']
+  ];
+  personalRows.forEach(r=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<th>${r[0]}</th><td>${r[1]}</td>`;
+    personalTable.appendChild(tr);
+  });
+
+  // References
+  const referenceBody = document.getElementById('referenceBody');
+  if(s.references && s.references.length){
+    referenceBody.innerHTML = '';
+    s.references.forEach(ref=>{
+      const d = document.createElement('div');
+      d.style.marginBottom = '10px';
+      d.innerHTML = `<div style="font-weight:700">${ref.name}</div>
+                     <div class="muted">${ref.org || ''} ${ref.designation ? ' • ' + ref.designation : ''}</div>
+                     <div class="small-muted">Mobile: ${ref.mobile || ref.phone || '-'}</div>`;
+      referenceBody.appendChild(d);
+    });
+  } else {
+    referenceBody.innerHTML = '<div class="no-data">No references available.</div>';
+  }
+}
+
+/* Optional: auto-populate first student if user wants */
+// renderStudent(students[0]);
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
 
 <footer class="bg-dark text-white pt-4">
   <div class="container">
