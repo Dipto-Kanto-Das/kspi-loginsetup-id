@@ -69,6 +69,7 @@
           <p class="mb-1"><strong>Father:</strong> <span id="studentFather"></span></p>
           <p class="mb-1"><strong>Mother:</strong> <span id="studentMother"></span></p>
           <p class="mb-0"><strong>Department:</strong> <span id="studentDept"></span></p>
+          <p class="mb-0"><strong>Contucet:</strong> <span id="studentCont"></span></p>
         </div>
       </div>
     </div>
@@ -81,7 +82,7 @@
 
 <script>
 const students = [
-  {id: "KSPI-011-010", name: "Jihad", fatherName: "Jasim Uddin", motherName: "Razia Sultana", dept: "SUR"},
+  {id: "KSPI-011-010", name: "Jihad", fatherName: "Jasim Uddin", motherName: "Razia Sultana", dept: "SUR",cont: "01728258963"},
   {id: "KSPI-011-011", name: "Simun Khan", fatherName: "######", motherName: "######", dept: "SUR"},
   {id: "KSPI-011-012", name: "Shahriar Rahman", fatherName: "######", motherName: "######", dept: "SUR"},
   {id: "KSPI-011-013", name: "Taposh", fatherName: "######", motherName: "######", dept: "SUR"},
@@ -122,7 +123,9 @@ function searchStudent() {
     document.getElementById("studentFather").innerText = student.fatherName;
     document.getElementById("studentMother").innerText = student.motherName;
     document.getElementById("studentDept").innerText = student.dept;
-    document.getElementById("studentPhoto").src = "./img/" + student.id + ".jpg"; // আলাদা ছবি থাকলে student ID দিয়ে নাম দাও
+    document.getElementById("studentCont").innerText = student.cont || "Not Available";
+    document.getElementById("studentPhoto").src = "./img/kspi.png" + student.id + ".jpg"; 
+    // আলাদা ছবি থাকলে student ID দিয়ে নাম দাও
 
     card.style.display = "block";
     notFound.classList.add("d-none");
