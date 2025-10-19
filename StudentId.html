@@ -27,7 +27,7 @@
         <li class="nav-item"><a class="nav-link" href="result.html">Result</a></li>
         <li class="nav-item"><a class="nav-link" href="notice.html">Notice</a></li>
         <li class="nav-item"><a class="nav-link" href="faculty.html">Faculty</a></li>
-        <li class="nav-item"><a class="nav-link" href="id.html">Students</a></li>
+        <li class="nav-item"><a class="nav-link" href="StudentId.html">Students</a></li>
       </ul>
     </div>
   </div>
@@ -82,33 +82,34 @@
 
 <script>
 const students = [
-  {id: "KSPI-011-010", name: "Jihad", fatherName: "Jasim Uddin", motherName: "Razia Sultana", dept: "SUR",cont: "01728258963"},
-  {id: "KSPI-011-011", name: "Simun Khan", fatherName: "######", motherName: "######", dept: "SUR"},
-  {id: "KSPI-011-012", name: "Shahriar Rahman", fatherName: "######", motherName: "######", dept: "SUR"},
-  {id: "KSPI-011-013", name: "Taposh", fatherName: "######", motherName: "######", dept: "SUR"},
-  {id: "KSPI-011-014", name: "Apon", fatherName: "######", motherName: "######", dept: "Civil"},
-  {id: "KSPI-011-015", name: "Saraf", fatherName: "######", motherName: "######", dept: "Civil"},
-  {id: "KSPI-011-016", name: "Shakib", fatherName: "######", motherName: "######", dept: "Civil"},
-  {id: "KSPI-011-017", name: "Jinia", fatherName: "######", motherName: "######", dept: "CST"},
-  {id: "KSPI-011-018", name: "Sorup", fatherName: "######", motherName: "######", dept: "CST"},
-  {id: "KSPI-011-019", name: "Zahid Islam", fatherName: "######", motherName: "######", dept: "SUR"},
-  {id: "KSPI-011-020", name: "Nadim", fatherName: "######", motherName: "######", dept: "SUR"},
-  {id: "KSPI-011-021", name: "Tanvir", fatherName: "######", motherName: "######", dept: "CST"},
-  {id: "KSPI-011-022", name: "Anika", fatherName: "######", motherName: "######", dept: "Civil"},
-  {id: "KSPI-011-023", name: "Rafi", fatherName: "######", motherName: "######", dept: "CST"},
-  {id: "KSPI-011-024", name: "Mim", fatherName: "######", motherName: "######", dept: "SUR"},
-  {id: "KSPI-011-025", name: "Shuvo", fatherName: "######", motherName: "######", dept: "Civil"},
-  {id: "KSPI-011-026", name: "Tonmoy", fatherName: "######", motherName: "######", dept: "CST"},
-  {id: "KSPI-011-027", name: "Sadia", fatherName: "######", motherName: "######", dept: "Civil"},
-  {id: "KSPI-011-028", name: "Rasel", fatherName: "######", motherName: "######", dept: "SUR"},
-  {id: "KSPI-011-029", name: "Puja", fatherName: "######", motherName: "######", dept: "CST"},
-  {id: "KSPI-011-030", name: "Badhon", fatherName: "######", motherName: "######", dept: "Civil"},
-  {id: "KSPI-011-031", name: "Mehedi", fatherName: "######", motherName: "######", dept: "CST"},
-  {id: "KSPI-011-032", name: "Shila", fatherName: "######", motherName: "######", dept: "Civil"},
-  {id: "KSPI-011-033", name: "Rimon", fatherName: "######", motherName: "######", dept: "SUR"},
-  {id: "KSPI-011-034", name: "Tuhin", fatherName: "######", motherName: "######", dept: "CST"},
-  {id: "KSPI-011-035", name: "Sumaiya", fatherName: "######", motherName: "######", dept: "Civil"}
+  {id: "KSPI-SUR-010", name: "Jihad", fatherName: "Jasim Uddin", motherName: "Razia Sultana", dept: "SUR", cont: "01728258963"},
+  {id: "KSPI-SUR-011", name: "Simun Khan", fatherName: "######", motherName: "######", dept: "SUR"},
+  {id: "KSPI-SUR-012", name: "Shahriar Rahman", fatherName: "######", motherName: "######", dept: "SUR"},
+  {id: "KSPI-SUR-013", name: "Taposh", fatherName: "######", motherName: "######", dept: "SUR"},
+  {id: "KSPI-CT-014", name: "Apon", fatherName: "######", motherName: "######", dept: "Civil"},
+  {id: "KSPI-CT-015", name: "Saraf", fatherName: "######", motherName: "######", dept: "Civil"},
+  {id: "KSPI-CT-016", name: "Shakib", fatherName: "######", motherName: "######", dept: "Civil"},
+  {id: "KSPI-CST-017", name: "Jinia", fatherName: "######", motherName: "######", dept: "CST"},
+  {id: "KSPI-CST-018", name: "Sorup", fatherName: "######", motherName: "######", dept: "CST"},
+  {id: "KSPI-SUR-019", name: "Zahid Islam", fatherName: "######", motherName: "######", dept: "SUR"},
+  {id: "KSPI-SUR-020", name: "Nadim", fatherName: "######", motherName: "######", dept: "SUR"},
+  {id: "KSPI-CST-021", name: "Tanvir", fatherName: "######", motherName: "######", dept: "CST"},
+  {id: "KSPI-CT-022", name: "Anika", fatherName: "######", motherName: "######", dept: "Civil"},
+  {id: "KSPI-CST-023", name: "Rafi", fatherName: "######", motherName: "######", dept: "CST"},
+  {id: "KSPI-SUR-024", name: "Mim", fatherName: "######", motherName: "######", dept: "SUR"},
+  {id: "KSPI-CT-025", name: "Shuvo", fatherName: "######", motherName: "######", dept: "Civil"},
+  {id: "KSPI-CST-026", name: "Tonmoy", fatherName: "######", motherName: "######", dept: "CST"},
+  {id: "KSPI-CT-027", name: "Sadia", fatherName: "######", motherName: "######", dept: "Civil"},
+  {id: "KSPI-SUR-028", name: "Rasel", fatherName: "######", motherName: "######", dept: "SUR"},
+  {id: "KSPI-CST-029", name: "Puja", fatherName: "######", motherName: "######", dept: "CST"},
+  {id: "KSPI-CT-030", name: "Badhon", fatherName: "######", motherName: "######", dept: "Civil"},
+  {id: "KSPI-CST-031", name: "Mehedi", fatherName: "######", motherName: "######", dept: "CST"},
+  {id: "KSPI-CT-032", name: "Shila", fatherName: "######", motherName: "######", dept: "Civil"},
+  {id: "KSPI-SUR-033", name: "Rimon", fatherName: "######", motherName: "######", dept: "SUR"},
+  {id: "KSPI-CST-034", name: "Tuhin", fatherName: "######", motherName: "######", dept: "CST"},
+  {id: "KSPI-CT-035", name: "Sumaiya", fatherName: "######", motherName: "######", dept: "Civil"}
 ];
+
 
 function searchStudent() {
   const id = document.getElementById("searchId").value.trim();
