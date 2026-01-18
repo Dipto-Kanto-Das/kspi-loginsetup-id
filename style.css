@@ -177,3 +177,71 @@ body {
       border-radius: 10px;
       box-shadow: 0 0 8px rgba(0,0,0,0.2);
     }
+
+    /* faculty */ 
+    body { background: #f8f9fa; }
+    /* ===== Faculty Card ===== */
+    .faculty-card-box {
+      border: none;
+      border-radius: 14px;
+      overflow: hidden;
+      transition: 0.35s ease;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .faculty-card-box:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+    }
+
+    .card-img-top {
+      height: 210px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 15px;
+      flex: 1;
+    }
+
+    .card-body h5 {
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+
+    .card-body p {
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    .faculty-contact p {
+      margin: 4px 0;
+      font-size: 13px;
+      color: #444;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .faculty-contact i {
+      color: #0d6efd;
+      font-size: 14px;
+      min-width: 18px;
+    }
+
+    .faculty-contact a {
+      color: #444;
+      text-decoration: none;
+    }
+
+    .faculty-contact a:hover {
+      color: #198754;
+      text-decoration: underline;
+    }
+
+ .fee{
+  color: red;
+ }
