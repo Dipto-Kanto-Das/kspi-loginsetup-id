@@ -1,235 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KSPI-Kirtankhola Survey & Polytechnic Institute</title>
-<link rel="shortcut icon" href="./img/KSPI-Ficon.png" type="image/x-icon" />
-  <!-- <link rel="stylesheet" href="style.css" /> -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KSPI Payment Statement</title>
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    /* Custom Style */
-    .faculty-card {
-      display: block;
-    }
-    .card-img-top {
-  width: 100%;
-  height: auto;
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+body { background:#f4f6f9; }
+.card { max-width:900px; margin:auto; }
+</style>
+</head>
+
+<body>
+
+<script>
+/* 🔐 Password Protection */
+if(!sessionStorage.getItem("login")){
+  const p = prompt("Enter Admin Password");
+  if(p !== "admin123"){
+    alert("Wrong Password");
+    location.reload();
+  }
+  sessionStorage.setItem("login","ok");
+}
+</script>
+
+<div class="container mt-4">
+<div class="card shadow">
+<div class="card-body">
+
+<h4 class="text-center mb-3">💳 Payment Statement System</h4>
+
+<!-- Add Payment -->
+<div class="row g-2 mb-3">
+  <div class="col-md-3">
+    <input id="pid" class="form-control" placeholder="Student ID">
+  </div>
+  <div class="col-md-3">
+    <input id="pname" class="form-control" placeholder="Student Name">
+  </div>
+  <div class="col-md-3">
+    <input id="pamount" type="number" class="form-control" placeholder="Amount">
+  </div>
+  <div class="col-md-3">
+    <button class="btn btn-success w-100" onclick="addPayment()">Add Payment</button>
+  </div>
+</div>
+
+<!-- Filters -->
+<div class="row g-2 mb-3">
+  <div class="col-md-4">
+    <input id="searchId" class="form-control" placeholder="Search by ID" onkeyup="loadData()">
+  </div>
+  <div class="col-md-4">
+    <input type="date" id="filterDate" class="form-control" onchange="loadData()">
+  </div>
+  <div class="col-md-4">
+    <button class="btn btn-primary w-100" onclick="downloadPDF()">Download PDF</button>
+  </div>
+</div>
+
+<!-- Table -->
+<table class="table table-bordered text-center">
+<thead class="table-dark">
+<tr>
+  <th>Date</th>
+  <th>ID</th>
+  <th>Name</th>
+  <th>Amount</th>
+  <th>Action</th>
+</tr>
+</thead>
+<tbody id="statementBody"></tbody>
+</table>
+
+<h5 class="text-end mt-2">Total: ৳ <span id="total">0</span></h5>
+
+</div>
+</div>
+</div>
+
+<script>
+function getPayments(){
+  return JSON.parse(localStorage.getItem("payments")) || [];
 }
 
+function savePayments(data){
+  localStorage.setItem("payments", JSON.stringify(data));
+}
 
-  </style>
-</head>
-<body>
-  <!-- Header Section -->
-  <div class="container-fluid bg-success bg-opacity-10 py-2">
-    <div class="container">
-      <div class="row align-items-center text-center text-md-start">
-        <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start align-items-center mb-2 mb-md-0">
-          <a href="index.html" class="me-2"><img src="./img/kspi.png" alt="Logo 1" height="60" /></a>
-          <a href="index.html"><img src="./img/logo-1.png" alt="Logo 2" height="60" /></a>
-        </div>
-        <div class="col-12 col-md-5 mb-2 mb-md-0">
-          <h3 class="had-p m-0 fw-semibold text-danger">৪ বছর মেয়াদী ডিপ্লোমা ইন ইঞ্জিনিয়ারিং কোর্সে ভর্তি চলিতেছে</h3>
-        </div>
-        <div class="col-12 col-md-3 text-center text-md-end">
-          <a class="btn btn-primary" href="apply.html">Apply Now</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-  <div class="container">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button> 
+function addPayment(){
+  const id = pid.value.trim();
+  const name = pname.value.trim();
+  const amount = parseFloat(pamount.value);
 
-    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#ass">About </a></li>
-        <li class="nav-item"><a class="nav-link" href="#us">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="#mag">Message</a></li>
-        <li class="nav-item"><a class="nav-link" href="#dss">Gallery</a></li>
-        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-        <!-- <li class="nav-item"><a class="nav-link" href="#">Sign-Up</a></li> -->
-        <li class="nav-item"><a class="nav-link" href="result.html">Result</a></li>
-        <li class="nav-item"><a class="nav-link" href="notice.html">Notice</a></li>
-        <li class="nav-item"><a class="nav-link" href="faculty.html">Faculty</a></li>
-        <li class="nav-item"><a class="nav-link" href="StudentId.html">Students</a></li>
-      </ul>
-      <div class="col-12 col-md-2 text-center text-md-end">
-        <a class="btn btn-primary" href="payment.html">payment</a>
-      </div>
-    </div>
-  </div>
-</nav>
+  if(!id || !name || amount<=0){
+    alert("Fill all fields");
+    return;
+  }
 
-  <!-- Navigation End -->
-    <!-- Latest Update Marquee -->
-    <section class="bg-warning py-2">
-        <div class="container">
-          <marquee behavior="scroll" direction="left" scrollamount="5" class="fw-bold fs-6 text-dark" onmouseover="this.stop()" onmouseout="this.start()">
-            <img src="./img/kspi.png" alt="Book Icon" style="height: 36px;  margin-right: 10px;">
-            "KSPI তে আপনাকে  স্বাগতম এবং আমাদের সাথে যুক্ত হওয়ার জন্য ধন্যবাদ। ভর্তি সংক্রান্ত যেকোনো তথ্যের জন্য,যোগাযোগ করুনঃ-স্থানঃ ফিশারি রোড, বরিশাল,ফোনঃ 01728312408, ই-মেইলঃ dipto2512@gmail.com"
-          </marquee>
-        </div>
-      </section>
-    <div class="container my-5">
-    <h1 class="text-center">Honourable Key Person</h1>
-    <!-- Search Bar -->
-    <div class="row justify-content-center mb-4">
-      <div class="col-md-6 col-sm-8 col-10">
-        <div class="input-group">
-          <input type="text" id="searchInput" class="form-control" placeholder="Search by name" />
-          <button class="btn btn-primary" type="button" onclick="searchFaculty()">Search</button>
-        </div>
-      </div>
-    </div>
+  const payments = getPayments();
+  payments.push({
+    date: new Date().toISOString().split("T")[0],
+    id, name, amount
+  });
 
-    <!-- Faculty Cards Section -->
-    <div id="faculty-list" class="row">
-      <!-- Faculty Card Example -->
-      <div class="col-md-4 col-sm-6 mb-4 faculty-card" data-name="MD. Sahin Khan" data-roll="01">
-        <div class="card shadow-sm">
-          <img src="./img/imran sir.jpg" class="card-img-top" alt="Faculty Photo" />
-          <div class="card-body text-center">
-           <h5 class="card-title"></h5>
-            <p class="card-text text-muted"></p>
-            <p class="text-muted">Engineer.</p>
-            <div class="mt-3">
-              <a href="mailto:mdshahin908077@gmail.com" class="btn btn-outline-primary btn-sm me-2">
-                <i class="fas fa-envelope"></i> 
-              </a>
-              <a href="tel:+8801721254194" class="btn btn-outline-success btn-sm">
-                <i class="fas fa-phone"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6 mb-4 faculty-card" data-name="MD. Sahin Khan" data-roll="01">
-        <div class="card shadow-sm">
-          <img src="./img/imran sir.jpg" class="card-img-top" alt="Faculty Photo" />
-          <div class="card-body text-center">
-           <h5 class="card-title"></h5>
-            <p class="card-text text-muted"></p>
-            <p class="text-muted">Engineer.</p>
-            <div class="mt-3">
-              <a href="mailto:dipto2512@gmail.com" class="btn btn-outline-primary btn-sm me-2">
-                <i class="fas fa-envelope"></i> 
-              </a>
-              <a href="tel:+8801728312408" class="btn btn-outline-success btn-sm">
-                <i class="fas fa-phone"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6 mb-4 faculty-card" data-name="MD. Sahin Khan" data-roll="01">
-        <div class="card shadow-sm">
-          <img src="./img/imran sir.jpg" class="card-img-top" alt="Faculty Photo" />
-          <div class="card-body text-center">
-            <h5 class="card-title"></h5>
-            <p class="card-text text-muted"></p>
-            <p class="text-muted">Engineer.</p>
-            <div class="mt-3">
-              <a href="mailto:dipto2512@gmail.com" class="btn btn-outline-primary btn-sm me-2">
-                <i class="fas fa-envelope"></i> 
-              </a>
-              <a href="tel:+8801728312408" class="btn btn-outline-success btn-sm">
-                <i class="fas fa-phone"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  savePayments(payments);
+  pid.value = pname.value = pamount.value = "";
+  loadData();
+}
 
-  <!-- JS Script -->
-  <script>
-    function searchFaculty() {
-      const searchInput = document.getElementById('searchInput').value.toLowerCase();
-      const facultyCards = document.querySelectorAll('.faculty-card');
+function loadData(){
+  const payments = getPayments();
+  const body = statementBody;
+  body.innerHTML = "";
 
-      facultyCards.forEach(function (card) {
-        const name = card.getAttribute('data-name').toLowerCase();
-        const roll = card.getAttribute('data-roll');
-        
-        if (name.includes(searchInput)) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
-  </script>
-<footer class="bg-dark text-white pt-4">
-  <div class="container">
-    <div class="row">
+  const search = searchId.value.toLowerCase();
+  const fdate = filterDate.value;
 
-      <!-- Contact Info -->
-      <div class="col-md-3 mb-4">
-        <h5>Contact Us</h5>
-        <p><strong>Address:</strong> Kirtankhola Survey & Polytechnic Institute.</p>
-        <p><strong>Phone:</strong> +8801728312408</p>
-        <p><strong>Email:</strong> 
-          <a href="mailto:dipto2512@gmail.com" class="text-white">dipto2512@gmail.com</a>
-        </p>
-      </div>
+  let total = 0;
 
-      <!-- Useful Links -->
-      <div class="col-md-3 mb-4">
-        <h5>Useful Links</h5>
-        <ul class="list-unstyled">
-          <li><a href="#" class="text-white">Admission</a></li>
-          <li><a href="#" class="text-white">Faculty</a></li>
-          <li><a href="#" class="text-white">Location</a></li>
-        </ul>
-      </div>
+  payments.forEach((p,i)=>{
+    if(search && !p.id.toLowerCase().includes(search)) return;
+    if(fdate && p.date !== fdate) return;
 
-      <!-- Map -->
-      <div class="col-md-3 mb-4">
-        <h5>Location</h5>
-        <div class="ratio ratio-4x3">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3680.3344414410967!2d90.33776917385485!3d22.71580742770926!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x375537dc29b0c1a1%3A0x635ffa79b514d0ea!2z4KaV4KeA4Kaw4KeN4Kak4Kao4KaW4KeL4Kay4Ka-IOCmuOCmvuCmsOCnjeCmreCnhyAmIOCmquCmsuCmv-Cmn-Cnh-CmleCmqOCmv-CmlSDgpofgpqjgprjgp43gpp_gpr_gpp_gpr_gpongpp8!5e0!3m2!1sbn!2sbd!4v1746115245054!5m2!1sbn!2sbd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-      </div>
+    total += p.amount;
 
-      <!-- Social Links -->
-      <div class="col-md-3 mb-4">
-        <h5>Follow Us</h5>
-        <ul class="list-unstyled d-flex gap-3 social-icons flex-wrap">
-          <li><a href="#" target="_blank" class="text-white" title="Facebook"><i class="fab fa-facebook fa-lg"></i></a></li>
-          <li><a href="#" target="_blank" class="text-white" title="YouTube"><i class="fab fa-youtube fa-lg"></i></a></li>
-          <li><a href="#" target="_blank" class="text-white" title="Instagram"><i class="fab fa-instagram fa-lg"></i></a></li>
-          <li><a href="3" target="_blank" class="text-white" title="LinkedIn"><i class="fab fa-linkedin fa-lg"></i></a></li>
-          <li><a href="#" target="_blank" class="text-white" title="Twitter"><i class="fab fa-twitter fa-lg"></i></a></li>
-          <li><a href="#" target="_blank" class="text-white" title="Telegram"><i class="fab fa-telegram fa-lg"></i></a></li>
-          <li><a href="https://wa.me/8801XXXXXXXXX" target="_blank" class="text-white" title="WhatsApp"><i class="fab fa-whatsapp fa-lg"></i></a></li>
-        </ul>
-      </div>
-    </div>
+    body.innerHTML += `
+    <tr>
+      <td>${p.date}</td>
+      <td>${p.id}</td>
+      <td>${p.name}</td>
+      <td>${p.amount}</td>
+      <td>
+        <button class="btn btn-sm btn-warning" onclick="editPayment(${i})">Edit</button>
+        <button class="btn btn-sm btn-danger" onclick="deletePayment(${i})">Del</button>
+      </td>
+    </tr>`;
+  });
 
-    <!-- Bottom Footer -->
-    <div class="footer-bottom border-top">
-      <div class="row align-items-center">
-        <div class="col-md-12 text-center ">
-          <p class="mb-0">&copy; 2025 Kirtankhola Survey & Polytechnic Institute.</p>
-        </div>
-        <div class="col-md-12 text-center ">
-          <small>Developed by <strong>Dipto-Das</strong></small>
-        </div>
-      </div>
-    </div>
-    
-</footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  document.getElementById("total").innerText = total.toFixed(2);
+}
+
+function deletePayment(i){
+  if(!confirm("Delete?")) return;
+  const payments = getPayments();
+  payments.splice(i,1);
+  savePayments(payments);
+  loadData();
+}
+
+function editPayment(i){
+  const p = getPayments()[i];
+  pid.value = p.id;
+  pname.value = p.name;
+  pamount.value = p.amount;
+  deletePayment(i);
+}
+
+function downloadPDF(){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.text("KSPI Payment Statement", 14, 10);
+  let y = 20;
+
+  getPayments().forEach(p=>{
+    doc.text(`${p.date} | ${p.id} | ${p.name} | ৳${p.amount}`,14,y);
+    y+=8;
+  });
+
+  doc.save("statement.pdf");
+}
+
+loadData();
+</script>
+
 </body>
 </html>

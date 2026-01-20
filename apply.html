@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>www.B.S.S.edu</title>
+  <title>www.kspi.edu.bd/apply</title>
   <link rel="shortcut icon" href="./img/KSPI-Ficon.png" type="image/x-icon" />
   <link rel="stylesheet" href="style.css" />
   <!-- Bootstrap CSS -->
@@ -12,20 +12,31 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body >
-<!-- Header Section -->
+  <!-- Header Section -->
 <div class="container-fluid bg-success bg-opacity-10 py-2">
   <div class="container">
     <div class="row align-items-center text-center text-md-start">
+      <!-- Left: Two Logos -->
       <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start align-items-center mb-2 mb-md-0">
-        <a href="index.html" class="me-2"><img src="./img/kspi.png" alt="Logo 1" height="60" /></a>
-        <a href="index.html"><img src="./img/logo-1.png" alt="Logo 2" height="60" /></a>
+        <a href="index.html" class="me-2">
+          <img src="./img/logo-chang.png" alt="Logo 1" height="100" />
+        </a>
+        <a href="index.html">
+          <img src="./img/logo-1.png" alt="Logo 2" height="60" />
+        </a>
       </div>
-      <div class="col-12 col-md-5 mb-2 mb-md-0">
-        <h3 class="had-p m-0 fw-semibold text-danger">৪ বছর মেয়াদী ডিপ্লোমা ইন ইঞ্জিনিয়ারিং কোর্সে ভর্তি চলিতেছে</h3>
+      <!-- Center: Heading Text -->
+      <div class="col-12 col-md-4 mb-2 mb-md-0">
+        <h3 class="had-p m-0 fw-semibold text-danger">
+          ৪ বছর মেয়াদী ডিপ্লোমা ইন ইঞ্জিনিয়ারিং কোর্সে ভর্তি চলিতেছে
+        </h3>
       </div>
-      <div class="col-12 col-md-3 text-center text-md-end">
+      <!-- Right: Buttons -->
+      <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end align-items-center gap-2">
         <a class="btn btn-primary" href="apply.html">Apply Now</a>
+        <a class="btn btn-success" href="payment.html">Payment</a>
       </div>
+
     </div>
   </div>
 </div>
@@ -34,28 +45,41 @@
   <div class="container">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
-    </button> 
-
+    </button>
     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#ass">About </a></li>
+        <li class="nav-item"><a class="nav-link" href="#ass">About</a></li>
         <li class="nav-item"><a class="nav-link" href="#us">Contact</a></li>
         <li class="nav-item"><a class="nav-link" href="#mag">Message</a></li>
         <li class="nav-item"><a class="nav-link" href="#dss">Gallery</a></li>
         <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-        <!-- <li class="nav-item"><a class="nav-link" href="#">Sign-Up</a></li> -->
+        <!-- Admission Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Admission</a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-submenu">
+              <a class="dropdown-item dropdown-toggle" href="#">Departments</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">CST</a></li>
+                <li><a class="dropdown-item" href="#">ET</a></li>
+                <li><a class="dropdown-item" href="#">SUR</a></li>
+                <li><a class="dropdown-item" href="#">CT</a></li>
+              </ul>
+            </li>
+            <li><a class="dropdown-item" href="#">Tuition Fee</a></li>
+            <li><a class="dropdown-item" href="#">Scholarship</a></li>
+          </ul>
+        </li>
         <li class="nav-item"><a class="nav-link" href="result.html">Result</a></li>
         <li class="nav-item"><a class="nav-link" href="notice.html">Notice</a></li>
         <li class="nav-item"><a class="nav-link" href="faculty.html">Faculty</a></li>
         <li class="nav-item"><a class="nav-link" href="StudentId.html">Students</a></li>
       </ul>
-      <div class="col-12 col-md-2 text-center text-md-end">
-        <a class="btn btn-primary" href="payment.html">payment</a>
-      </div>
     </div>
   </div>
 </nav>
+  <!-- Navigation End -->
 <!-- start -->
 <section class="bg-warning py-2">
   <div class="container">
@@ -71,11 +95,11 @@
     <!-- Applicant Details -->
     <div class="row mb-3">
       <div class="col-md-6">
-        <label for="name" class="form-label">Name of Applicant *</label>
+        <label for="name" class="form-label">Name of Applicant <span class="text-danger">*</span></label>
         <input type="text" class="form-control" id="name" required>
       </div>
       <div class="col-md-6">
-        <label for="course" class="form-label">Course Applied For *</label>
+        <label for="course" class="form-label">Course Applied For <span class="text-danger">*</span></label>
         <select class="form-select" id="course" required>
           <option value="">Choose Course</option>
           <option>Diploma in Civil Engineering</option>
@@ -86,30 +110,33 @@
         </select>
       </div>
     </div>
+
     <div class="row mb-3">
       <div class="col-md-6">
-        <label for="father" class="form-label">Father's Name *</label>
+        <label for="father" class="form-label">Father's Name <span class="text-danger">*</span></label>
         <input type="text" class="form-control" id="father" required>
       </div>
       <div class="col-md-6">
-        <label for="mother" class="form-label">Mother's Name *</label>
+        <label for="mother" class="form-label">Mother's Name <span class="text-danger">*</span></label>
         <input type="text" class="form-control" id="mother" required>
       </div>
     </div>
+
     <!-- Contact Info -->
     <div class="row mb-3">
       <div class="col-md-6">
-        <label for="email" class="form-label">Email *</label>
+        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
         <input type="email" class="form-control" id="email" required>
       </div>
       <div class="col-md-6">
-        <label for="phone" class="form-label">Phone/Mobile *</label>
+        <label for="phone" class="form-label">Phone/Mobile <span class="text-danger">*</span></label>
         <input type="tel" class="form-control" id="phone" required>
       </div>
     </div>
+
     <div class="row mb-3">
       <div class="col-md-4">
-        <label for="gender" class="form-label">Gender *</label>
+        <label for="gender" class="form-label">Gender <span class="text-danger">*</span></label>
         <select class="form-select" id="gender" required>
           <option value="">Select Gender</option>
           <option>Male</option>
@@ -118,11 +145,11 @@
         </select>
       </div>
       <div class="col-md-4">
-        <label for="dob" class="form-label">Date of Birth *</label>
+        <label for="Date Of Birth" class="form-label">Date of Birth <span class="text-danger">*</span></label>
         <input type="date" class="form-control" id="dob" required>
       </div>
       <div class="col-md-4">
-        <label for="marital" class="form-label">Marital Status *</label>
+        <label for="marital Status" class="form-label">Marital Status <span class="text-danger">*</span></label>
         <select class="form-select" id="marital" required>
           <option value="">Select Marital Status</option>
           <option>Single</option>
@@ -130,46 +157,50 @@
         </select>
       </div>
     </div>
+
     <!-- Nationality, Religion -->
     <div class="row mb-3">
       <div class="col-md-6">
-        <label for="nationality" class="form-label">Nationality *</label>
+        <label for="nationality" class="form-label">Nationality <span class="text-danger">*</span></label>
         <input type="text" class="form-control" id="nationality" required>
       </div>
       <div class="col-md-6">
-        <label for="religion" class="form-label">Religion *</label>
+        <label for="religion" class="form-label">Religion <span class="text-danger">*</span></label>
         <input type="text" class="form-control" id="religion" required>
       </div>
     </div>
+
     <!-- Address -->
     <div class="mb-3">
-      <label for="presentAddress" class="form-label">Present Address *</label>
+      <label for="presentAddress" class="form-label">Present Address <span class="text-danger">*</span></label>
       <textarea class="form-control" id="presentAddress" rows="2" required></textarea>
     </div>
     <div class="mb-3">
-      <label for="permanentAddress" class="form-label">Permanent Address *</label>
+      <label for="permanentAddress" class="form-label">Permanent Address <span class="text-danger">*</span></label>
       <textarea class="form-control" id="permanentAddress" rows="2" required></textarea>
     </div>
+
     <!-- SSC Info -->
     <h5 class="mt-4">SSC Examination Information</h5>
     <div class="row mb-3">
       <div class="col-md-3">
-        <label for="sscRoll" class="form-label">SSC Roll No *</label>
+        <label for="sscRoll" class="form-label">SSC Roll No <span class="text-danger">*</span></label>
         <input type="text" class="form-control" id="sscRoll" required>
       </div>
       <div class="col-md-3">
-        <label for="sscReg" class="form-label">SSC Reg. No *</label>
+        <label for="sscReg" class="form-label">SSC Reg. No <span class="text-danger">*</span></label>
         <input type="text" class="form-control" id="sscReg" required>
       </div>
       <div class="col-md-3">
-        <label for="sscYear" class="form-label">Passing Year *</label>
+        <label for="sscYear" class="form-label">Passing Year <span class="text-danger">*</span></label>
         <input type="text" class="form-control" id="sscYear" required>
       </div>
       <div class="col-md-3">
-        <label for="sscGPA" class="form-label">GPA *</label>
+        <label for="sscGPA" class="form-label">GPA <span class="text-danger">*</span></label>
         <input type="text" class="form-control" id="sscGPA" required>
       </div>
     </div>
+
     <!-- Quota -->
     <div class="mb-3">
       <label for="quota" class="form-label">Quota (if any)</label>
@@ -181,27 +212,74 @@
         <option>Others</option>
       </select>
     </div>
+
     <!-- Source of info -->
     <div class="mb-3">
-      <label for="kspiRef" class="form-label">How did you know about this institute? *</label>
+      <label for="kspiRef" class="form-label">How did you know about this institute? <span class="text-danger">*</span></label>
       <input type="text" class="form-control" id="kspiRef" required>
     </div>
+
     <!-- Optional Experience -->
     <div class="mb-3">
       <label for="experience" class="form-label">Experience (Optional)</label>
       <textarea class="form-control" id="experience" rows="2"></textarea>
     </div>
+
     <!-- Photo Upload -->
     <div class="mb-3">
-      <label for="photo" class="form-label">Photo Upload *</label>
+      <label for="photo" class="form-label">Photo Upload <span class="text-danger">*</span></label>
       <input type="file" class="form-control" id="photo" accept="image/*" required>
     </div>
+
     <!-- Submit -->
     <div class="text-center">
       <button type="submit" class="btn btn-primary px-4">Submit Application</button>
     </div>
   </form>
 </div>
+
+    <script>
+const form = document.querySelector("form");
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const applicant = {
+    name: document.getElementById("name").value,
+    course: document.getElementById("course").value,
+    father: document.getElementById("father").value,
+    mother: document.getElementById("mother").value,
+    email: document.getElementById("email").value,
+    phone: document.getElementById("phone").value,
+    gender: document.getElementById("gender").value,
+    dob: document.getElementById("dob").value,
+    marital: document.getElementById("marital").value,
+    nationality: document.getElementById("nationality").value,
+    religion: document.getElementById("religion").value,
+    presentAddress: document.getElementById("presentAddress").value,
+    permanentAddress: document.getElementById("permanentAddress").value,
+    sscRoll: document.getElementById("sscRoll").value,
+    sscReg: document.getElementById("sscReg").value,
+    sscYear: document.getElementById("sscYear").value,
+    sscGPA: document.getElementById("sscGPA").value,
+    quota: document.getElementById("quota").value,
+    ref: document.getElementById("kspiRef").value,
+    experience: document.getElementById("experience").value,
+    photo: document.getElementById("photo").files[0] ? URL.createObjectURL(document.getElementById("photo").files[0]) : ""
+  };
+
+  // Get existing applicants
+  let applicants = JSON.parse(localStorage.getItem("applicants")) || [];
+  applicants.push(applicant);
+
+  localStorage.setItem("applicants", JSON.stringify(applicants));
+
+  alert("Application submitted successfully!");
+  form.reset();
+});
+</script>
+
+
 <!-- Footer -->
 <footer class="bg-dark text-white pt-4">
   <div class="container">

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KSPI Admin Payment Dashboard</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  body { background-color: #f8f9fa; }
+  .table-container { max-width: 1200px; margin: auto; margin-top: 20px; }
+  table td, table th { vertical-align: middle !important; }
+</style>
+</head>
+<body>
+<!-- Header Section: Logos Centered -->
+<div class="container-fluid bg-success bg-opacity-10 py-3">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-auto d-flex justify-content-center align-items-center">
+        <a href="index.html" class="me-3">
+          <img src="./img/logo-chang.png" alt="Logo 1" height="100" />
+        </a>
+        <a href="index.html">
+          <img src="./img/logo-1.png" alt="Logo 2" height="60" />
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" class="d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow p-4" style="width:350px;">
+    <h4 class="text-center mb-3">Admin Login</h4>
+    <input type="password" id="adminPassword" class="form-control mb-3" placeholder="Enter Password">
+    <button class="btn btn-success w-100" onclick="login()">Login</button>
+    <div id="loginError" class="text-danger text-center mt-2 d-none">
+      ❌ Wrong Password
+    </div>
+  </div>
+</div>
+<div class="container table-container d-none" id="dashboard">
+      <!-- Logout Button -->
+  <div class="text-end mb-2">
+    <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+  </div>
+
+  <h3 class="text-center mb-3">KSPI  Payment Dashboard</h3>
+
+  <div class="row mb-3">
+    <div class="col-md-3">
+      <input type="text" id="studentFilter" class="form-control" placeholder="Search by Student ID">
+    </div>
+    <div class="col-md-3">
+      <input type="month" id="monthFilter" class="form-control">
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-success w-100" id="exportPDF">Export Month PDF</button>
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-secondary w-100" id="refreshBtn">Refresh Table</button>
+    </div>
+  </div>
+
+  <div class="mb-2">
+    <div id="studentTotal" class="alert alert-info">Selected Student Total: 0 BDT</div>
+    <div id="monthTotal" class="alert alert-success">Month Total (Filtered): 0 BDT</div>
+  </div>
+
+  <table class="table table-bordered table-striped">
+    <thead class="table-success">
+      <tr>
+        <th>Student ID</th>
+        <th>Name</th>
+        <th>Payment Method</th>
+        <th>Type/Bank</th>
+        <th>Transaction ID</th>
+        <th>Total (BDT)</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="historyTable"></tbody>
+  </table>
+</div>
+
+<script>
+const studentFilter = document.getElementById("studentFilter");
+const monthFilter = document.getElementById("monthFilter");
+const studentTotalEl = document.getElementById("studentTotal");
+const monthTotalEl = document.getElementById("monthTotal");
+const tableBody = document.getElementById("historyTable");
+const exportPDFBtn = document.getElementById("exportPDF");
+const refreshBtn = document.getElementById("refreshBtn");
+
+function renderTable(){
+  const payments = JSON.parse(localStorage.getItem("payments") || "[]");
+  const studentKeyword = studentFilter.value.toLowerCase();
+  const monthValue = monthFilter.value;
+
+  let studentTotal = 0;
+  let monthTotal = 0;
+
+  const filtered = payments.filter(p=>{
+    let matchStudent = true;
+    if(studentKeyword){
+      matchStudent = p.studentId.toLowerCase().includes(studentKeyword) || p.studentName.toLowerCase().includes(studentKeyword);
+    }
+    let matchMonth = true;
+    if(monthValue){
+      const pMonth = new Date(p.date).toISOString().slice(0,7);
+      matchMonth = (pMonth === monthValue);
+    }
+    return matchMonth && matchStudent;
+  });
+
+  tableBody.innerHTML = "";
+
+  filtered.forEach((p)=>{
+    monthTotal += p.totalAmount; // filtered table অনুযায়ী মোট
+
+    if(studentKeyword && (p.studentId.toLowerCase().includes(studentKeyword) || p.studentName.toLowerCase().includes(studentKeyword))){
+      studentTotal += p.totalAmount; // selected student total
+    }
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${p.studentId}</td>
+      <td>${p.studentName}</td>
+      <td>${p.method}</td>
+      <td>${p.paymentType}</td>
+      <td>${p.transaction}</td>
+      <td>${p.totalAmount.toFixed(2)}</td>
+      <td>${p.date}</td>
+      <td>
+        <button class="btn btn-sm btn-primary printBtn">Print</button>
+        <button class="btn btn-sm btn-danger deleteBtn">Delete</button>
+      </td>
+    `;
+    tableBody.appendChild(tr);
+
+    // Print single
+    tr.querySelector(".printBtn").addEventListener("click", ()=>{
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      let y = 10;
+      doc.setFontSize(16);
+      doc.text("KSPI Payment Receipt", 105, y, null, null, "center");
+      y += 10;
+      doc.setFontSize(12);
+      const info = [
+        `Student Name: ${p.studentName}`,
+        `Student ID: ${p.studentId}`,
+        `Payment Method: ${p.method}`,
+        `Type/Bank: ${p.paymentType}`,
+        `Transaction ID: ${p.transaction}`,
+        `Total Amount: ${p.totalAmount.toFixed(2)}`,
+        `Date: ${p.date}`
+      ];
+      info.forEach(line=>{
+        doc.text(line, 10, y);
+        y += 7;
+      });
+      doc.save(`${p.studentId}_payment.pdf`);
+    });
+
+    // Delete
+    tr.querySelector(".deleteBtn").addEventListener("click", ()=>{
+      const payments = JSON.parse(localStorage.getItem("payments") || "[]");
+      if(confirm("Are you sure you want to delete this payment?")){
+        const index = payments.findIndex(item => item.studentId === p.studentId && item.transaction === p.transaction && item.date === p.date);
+        if(index !== -1){
+          payments.splice(index,1);
+          localStorage.setItem("payments", JSON.stringify(payments));
+          renderTable();
+        }
+      }
+    });
+  });
+
+  studentTotalEl.innerText = `Selected Student Total: ${studentTotal.toFixed(2)} BDT`;
+  monthTotalEl.innerText = `Month Total (Filtered): ${monthTotal.toFixed(2)} BDT`;
+}
+
+// Event listeners
+studentFilter.addEventListener("input", renderTable);
+monthFilter.addEventListener("change", renderTable);
+refreshBtn.addEventListener("click", renderTable);
+
+// PDF Export with wrapping and page break
+exportPDFBtn.addEventListener("click", ()=>{
+  const payments = JSON.parse(localStorage.getItem("payments") || "[]");
+  const monthValue = monthFilter.value;
+  const studentKeyword = studentFilter.value.toLowerCase();
+
+  if(!monthValue){ alert("Please select a month first"); return; }
+
+  // Filter payments by month and search keyword
+  const filtered = payments.filter(p=>{
+    const pMonth = new Date(p.date).toISOString().slice(0,7);
+    const matchMonth = pMonth === monthValue;
+    let matchStudent = true;
+    if(studentKeyword){
+      matchStudent = p.studentId.toLowerCase().includes(studentKeyword) || p.studentName.toLowerCase().includes(studentKeyword);
+    }
+    return matchMonth && matchStudent;
+  });
+
+  if(filtered.length === 0){ alert("No payments found for this selection"); return; }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF('p', 'pt');
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const margin = 40;
+  let y = margin;
+
+  doc.setFontSize(16);
+  let title = `KSPI Payments Report - ${monthValue}`;
+  if(studentKeyword) title += ` (Filtered Student)`;
+  doc.text(title, pageWidth/2, y, null, null, "center");
+  y += 30;
+
+  doc.setFontSize(12);
+  const lineHeight = 20;
+  const headers = ["Student ID","Name","Method","Type/Bank","Transaction","Total","Date"];
+  const colWidth = [70,100,60,70,80,50,60];
+
+  function drawTableRow(data, yPos, isHeader=false){
+    let x = margin;
+    let rowHeight = lineHeight;
+    data.forEach((txt,i)=>{
+      const splitText = doc.splitTextToSize(txt.toString(), colWidth[i]-4);
+      if(splitText.length * lineHeight > rowHeight) rowHeight = splitText.length * lineHeight;
+    });
+    data.forEach((txt,i)=>{
+      doc.rect(x, yPos - 15, colWidth[i], rowHeight);
+      doc.setFont(undefined, isHeader ? "bold" : "normal");
+      const splitText = doc.splitTextToSize(txt.toString(), colWidth[i]-4);
+      doc.text(splitText, x + 2, yPos);
+      x += colWidth[i];
+    });
+    return rowHeight;
+  }
+
+  let headerHeight = drawTableRow(headers, y, true);
+  y += headerHeight;
+
+  const studentsMap = {};
+  filtered.forEach(p=>{
+    if(!studentsMap[p.studentId]) studentsMap[p.studentId] = [];
+    studentsMap[p.studentId].push(p);
+  });
+
+  let grandTotal = 0;
+  for(const studentId in studentsMap){
+    const studentPayments = studentsMap[studentId];
+    let studentTotal = 0;
+
+    studentPayments.forEach(p=>{
+      if(y + lineHeight > pageHeight - margin){
+        doc.addPage();
+        y = margin;
+        drawTableRow(headers, y, true);
+        y += lineHeight;
+      }
+      const rowData = [
+        p.studentId,
+        p.studentName,
+        p.method,
+        p.paymentType,
+        p.transaction,
+        p.totalAmount.toFixed(2),
+        p.date
+      ];
+      let usedHeight = drawTableRow(rowData, y);
+      y += usedHeight;
+      studentTotal += p.totalAmount;
+      grandTotal += p.totalAmount;
+    });
+
+    if(y + lineHeight > pageHeight - margin){
+      doc.addPage();
+      y = margin;
+      drawTableRow(headers, y, true);
+      y += lineHeight;
+    }
+    const subtotalRow = ["", "", "", "", "Subtotal", studentTotal.toFixed(2), ""];
+    y += drawTableRow(subtotalRow, y, true);
+  }
+
+  if(y + lineHeight > pageHeight - margin){
+    doc.addPage();
+    y = margin;
+    drawTableRow(headers, y, true);
+    y += lineHeight;
+  }
+  const totalRow = ["", "", "", "", "Grand Total", grandTotal.toFixed(2), ""];
+  drawTableRow(totalRow, y, true);
+
+  // Save PDF
+  let fileName = `KSPI_${monthValue}_payments.pdf`;
+  if(studentKeyword) fileName = `KSPI_${monthValue}_${studentKeyword}_payments.pdf`;
+  doc.save(fileName);
+});
+
+renderTable();
+
+const ADMIN_PASSWORD = "123456"; 
+const loginScreen = document.getElementById("loginScreen");
+const dashboard = document.getElementById("dashboard");
+const loginError = document.getElementById("loginError");
+
+function login(){
+  const pass = document.getElementById("adminPassword").value;
+  if(pass === ADMIN_PASSWORD){
+    localStorage.setItem("kspi_admin_logged_in", "yes");
+    loginScreen.classList.add("d-none");
+    dashboard.classList.remove("d-none");
+  } else {
+    loginError.classList.remove("d-none");
+  }
+}
+
+function logout(){
+  localStorage.removeItem("kspi_admin_logged_in");
+  location.reload();
+}
+
+// Auto check login
+if(localStorage.getItem("kspi_admin_logged_in") === "yes"){
+  loginScreen.classList.add("d-none");
+  dashboard.classList.remove("d-none");
+}
+</script>
+
+     <!-- Emergency Hotline Section -->
+    <div class="mb-4">
+      <img src="./img/gov_hotline-min (1).jpg" alt="Emergency Hotline" class="img-fluid rounded shadow" style="max-height: 300px;" />
+    </div>
+<footer class="bg-dark text-white pt-4">
+  <div class="container">
+    <div class="row">
+
+      <!-- Contact Info -->
+      <div class="col-md-3 mb-4">
+        <h5>Contact Us</h5>
+        <p><strong>Address:</strong> Kirtankhola Survey & Polytechnic Institute,Barishal.</p>
+        <p><strong>Phone:</strong> +8801728312408</p>
+        <p><strong>Email:</strong> 
+          <a href="mailto:dipto2512@gmail.com" class="text-white">dipto2512@gmail.com</a>
+        </p>
+      </div>
+
+      <!-- Useful Links -->
+      <div class="col-md-3 mb-4">
+        <h5>Useful Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-white">Admission</a></li>
+          <li><a href="#" class="text-white">Faculty</a></li>
+          <li><a href="#" class="text-white">Location</a></li>
+        </ul>
+      </div>
+
+      <!-- Map -->
+      <div class="col-md-3 mb-4">
+        <h5>Location</h5>
+        <div class="ratio ratio-4x3">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3680.3344414410967!2d90.33776917385485!3d22.71580742770926!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x375537dc29b0c1a1%3A0x635ffa79b514d0ea!2z4KaV4KeA4Kaw4KeN4Kak4Kao4KaW4KeL4Kay4Ka-IOCmuOCmvuCmsOCnjeCmreCnhyAmIOCmquCmsuCmv-Cmn-Cnh-CmleCmqOCmv-CmlSDgpofgpqjgprjgp43gpp_gpr_gpp_gpr_gpongpp8!5e0!3m2!1sbn!2sbd!4v1746115245054!5m2!1sbn!2sbd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+
+      <!-- Social Links -->
+      <div class="col-md-3 mb-4">
+        <h5>Follow Us</h5>
+        <ul class="list-unstyled d-flex gap-3 social-icons flex-wrap">
+          <li><a href="#" target="_blank" class="text-white" title="Facebook"><i class="fab fa-facebook fa-lg"></i></a></li>
+          <li><a href="#" target="_blank" class="text-white" title="YouTube"><i class="fab fa-youtube fa-lg"></i></a></li>
+          <li><a href="#" target="_blank" class="text-white" title="Instagram"><i class="fab fa-instagram fa-lg"></i></a></li>
+          <li><a href="3" target="_blank" class="text-white" title="LinkedIn"><i class="fab fa-linkedin fa-lg"></i></a></li>
+          <li><a href="#" target="_blank" class="text-white" title="Twitter"><i class="fab fa-twitter fa-lg"></i></a></li>
+          <li><a href="#" target="_blank" class="text-white" title="Telegram"><i class="fab fa-telegram fa-lg"></i></a></li>
+          <li><a href="https://wa.me/8801XXXXXXXXX" target="_blank" class="text-white" title="WhatsApp"><i class="fab fa-whatsapp fa-lg"></i></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Footer -->
+    <div class="footer-bottom border-top">
+      <div class="row align-items-center">
+        <div class="col-md-12 text-center ">
+          <p class="mb-0">&copy; 2025 Kirtankhola Survey & Polytechnic Institute,Barishal.</p>
+        </div>
+        <div class="col-md-12 text-center ">
+          <small>Developed by <strong>Dipto-Das</strong></small>
+        </div>
+      </div>
+    </div>
+</footer>
+
+
+</body>
+</html>
