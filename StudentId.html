@@ -3,188 +3,186 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Profile</title>
+<title>Student Profile Portal</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
-  body {
-    background-color: #f4f6f9;
-    font-family: Arial, sans-serif;
-  }
-  .profile-card {
-    max-width: 900px;
-    margin: 30px auto;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    padding-bottom: 60px;
-  }
-  .profile-header {
-    background-color: #0d6efd;
-    color: white;
+body { background:#f4f6f9; font-family: Arial, sans-serif; }
+#authCard { max-width:400px; margin:50px auto; padding:30px; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.1); background:white; }
+#profileCard { display:none; max-width:1000px; margin:30px auto; background:white; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.1); padding:20px; }
+.welcome { text-align:center; font-size:28px; font-weight:bold; margin-bottom:15px; color:#0d6efd; }
+.header { display:flex; justify-content:space-between; align-items:center; padding:20px; background:#0d6efd; color:white; border-radius:10px 10px 0 0; }
+.header .info { line-height:1.5; }
+.header img { width:120px; height:120px; border-radius:10px; border:3px solid white; object-fit:cover; }
+.payment-section { margin-top:20px; }
+table th, table td { vertical-align:middle; }
+
+.header {
+  display: flex;
+  flex-direction: row; /* desktop এ row */
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* mobile এ wrap হবে */
+}
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column; /* mobile এ info + photo vertical */
     text-align: center;
-    padding: 20px;
-    border-radius: 10px 10px 0 0;
   }
-  .profile-header img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border: 3px solid white;
+  .header .info {
+    margin-bottom: 15px;
   }
-  .nav-tabs .nav-link.active {
-    background-color: #0d6efd;
-    color: white;
+}
+.profile-img img {
+  width: 120px; /* desktop */
+  height: 120px;
+}
+@media (max-width: 768px) {
+  .profile-img img {
+    width: 100px;
+    height: 100px;
   }
-  table th, table td {
-    vertical-align: middle;
+}
+.header .info p {
+  margin: 2px 0; /* compact spacing */
+}
+@media (max-width: 768px) {
+  .welcome {
+    font-size: 22px;
   }
-  #paymentBtn {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-  }
+}
+
+
 </style>
 </head>
 <body>
 
-<div class="profile-card">
-  <!-- Header -->
-  <div class="profile-header">
-    <img src="https://via.placeholder.com/120" alt="Student Photo">
-    <h2 id="studentName">John Doe</h2>
-    <p id="studentID">ID: 20260001 | Department: CSE | Year: 2</p>
+<!-- LOGIN CARD -->
+<div id="authCard">
+  <h3 class="text-center mb-3">Login</h3>
+  <form id="loginForm">
+    <div class="mb-3">
+      <label>College ID</label>
+      <input type="text" id="collegeID" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label>Password</label>
+      <input type="password" id="password" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Login</button>
+  </form>
+  <p id="loginMsg" class="text-danger text-center mt-2"></p>
+</div>
+
+<!-- PROFILE CARD -->
+<div id="profileCard">
+  <div class="header">
+    <div class="info">
+      <h3 id="studentName"></h3>
+      <p><strong>Father Name:</strong> <span id="fatherName"></span></p>
+      <p><strong>College ID:</strong> <span id="studentID"></span></p>
+      <p><strong>Current Semester:</strong> <span id="semester"></span></p>
+      <p><strong>Department:</strong> <span id="department"></span></p>
+      <p><strong>Session:</strong> <span id="session"></span> | <strong>Batch:</strong> <span id="batch"></span></p>
+    </div>
+    <h1>Welcome to KSPI</h1>
+    <div>
+      <img id="studentImg" src="./img/Dipto-Icon.png" alt="Student Photo">
+    </div>
   </div>
 
-  <!-- Tabs -->
-  <ul class="nav nav-tabs mt-3" id="profileTabs" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="personal-tab" data-bs-toggle="tab" data-bs-target="#personal" type="button">Personal</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="academic-tab" data-bs-toggle="tab" data-bs-target="#academic" type="button">Academic</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="payment-tab" data-bs-toggle="tab" data-bs-target="#payment" type="button">Payment</button>
-    </li>
-  </ul>
-
-  <!-- Tab Content -->
-  <div class="tab-content p-3">
-    <!-- Personal Info -->
-    <div class="tab-pane fade show active" id="personal">
-      <h4>Contact Info</h4>
-      <p><strong>Email:</strong> <span id="studentEmail"></span></p>
-      <p><strong>Phone:</strong> <span id="studentPhone"></span></p>
-      <p><strong>Address:</strong> <span id="studentAddress"></span></p>
-    </div>
-
-    <!-- Academic Info -->
-    <div class="tab-pane fade" id="academic">
-      <h4>Academic Info</h4>
-      <table class="table table-bordered">
-        <thead class="table-light">
-          <tr>
-            <th>Course Code</th>
-            <th>Course Name</th>
-            <th>Semester</th>
-            <th>Grade</th>
-          </tr>
-        </thead>
-        <tbody id="academicTable"></tbody>
-      </table>
-      <p><strong>GPA:</strong> <span id="studentGPA"></span></p>
-    </div>
-
-    <!-- Payment Info -->
-    <div class="tab-pane fade" id="payment" style="position: relative;">
-      <h4>Payment Info</h4>
-      <table class="table table-bordered">
-        <thead class="table-light">
-          <tr>
-            <th>Month</th>
-            <th>Amount Paid</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="paymentTable"></tbody>
-      </table>
-      <p><strong>Total Paid:</strong> <span id="totalPaid"></span></p>
-      <p><strong>Outstanding:</strong> <span id="outstanding"></span></p>
-
-      <!-- Payment Button inside Payment tab only -->
-      <button id="paymentBtn" class="btn btn-success" style="display:none;">
-        Payment
-      </button>
-    </div>
+  <!-- Payment Section -->
+  <div class="payment-section">
+    <h4>Payment Summary</h4>
+    <table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>Semester</th>
+          <th>Amount Paid</th>
+          <th>Outstanding</th>
+        </tr>
+      </thead>
+      <tbody id="paymentTable"></tbody>
+    </table>
+    <p><strong>Total Paid:</strong> <span id="totalPaid"></span> BDT</p>
+    <p><strong>Total Outstanding:</strong> <span id="totalOutstanding"></span> BDT</p>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  // Student Data
-  const student = {
-    name: "Jane Rahman",
-    id: "20260120",
-    dept: "EEE",
-    year: 3,
-    email: "jane.rahman@university.edu",
-    phone: "+8801987654321",
-    address: "456 University Ave, Dhaka",
-    gpa: 3.92,
-    courses: [
-      {code: "EEE201", name: "Circuits & Electronics", sem: 3, grade: "A"},
-      {code: "EEE202", name: "Signals & Systems", sem: 3, grade: "A-"},
-      {code: "EEE203", name: "Electromagnetics", sem: 3, grade: "B+"}
-    ],
-    payments: [
-      {month: "January", amount: 12000, status: "Paid"},
-      {month: "February", amount: 12000, status: "Paid"},
-      {month: "March", amount: 12000, status: "Pending"}
+// Demo Students Data
+const students = [
+  {
+    collegeID:"20260001",
+    password:"12345",
+    name:"Dipto Das",
+    father:"Narayan Chandra Das",
+    semester:"3rd",
+    dept:"CSE",
+    session:"2023-24",
+    batch:"Batch 2024",
+    img:"./img/Dipto-Icon.png",
+    payments:[
+      {semester:"January TO June(1st)", paid:12000, outstanding:0},
+      {semester:"July To December (2nd)", paid:10000, outstanding:2000},
+      {semester:"January TO June (3rd)", paid:15000, outstanding:0},
+      {semester:"July To December (4th)", paid:0, outstanding:12000},
+      {semester:"January TO June (5th)", paid:15000, outstanding:0},
+      {semester:"July To December (6th)", paid:14000, outstanding:1000},
+      {semester:"January TO June (7th)", paid:0, outstanding:15000},
+      {semester:"July To December (8th)", paid:16000, outstanding:0}
     ]
-  };
-
-  // Populate Personal Info
-  document.getElementById("studentName").textContent = student.name;
-  document.getElementById("studentID").textContent = `ID: ${student.id} | Department: ${student.dept} | Year: ${student.year}`;
-  document.getElementById("studentEmail").textContent = student.email;
-  document.getElementById("studentPhone").textContent = student.phone;
-  document.getElementById("studentAddress").textContent = student.address;
-
-  // Populate Academic Info
-  document.getElementById("academicTable").innerHTML = student.courses.map(c => `
-    <tr>
-      <td>${c.code}</td>
-      <td>${c.name}</td>
-      <td>${c.sem}</td>
-      <td>${c.grade}</td>
-    </tr>
-  `).join('');
-  document.getElementById("studentGPA").textContent = student.gpa;
-
-  // Populate Payment Info
-  const paymentTable = document.getElementById("paymentTable");
-  paymentTable.innerHTML = student.payments.map(p => `
-    <tr>
-      <td>${p.month}</td>
-      <td>${p.amount.toLocaleString()} BDT</td>
-      <td>${p.status}</td>
-    </tr>
-  `).join('');
-
-  const totalPaidValue = student.payments.reduce((sum,p) => sum + (p.status === "Paid" ? p.amount : 0), 0);
-  const totalAmount = student.payments.reduce((sum,p) => sum + p.amount, 0);
-  document.getElementById("totalPaid").textContent = totalPaidValue.toLocaleString() + " BDT";
-  document.getElementById("outstanding").textContent = (totalAmount - totalPaidValue).toLocaleString() + " BDT";
-
-  // Show Payment Button only if there is at least one payment
-  const paymentBtn = document.getElementById("paymentBtn");
-  if(student.payments.length > 0) {
-    paymentBtn.style.display = "block";
-    // Redirect to payment.html on click
-    paymentBtn.addEventListener("click", () => {
-      window.location.href = "payment.html";
-    });
   }
+];
+
+// LOGIN LOGIC
+document.getElementById("loginForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const collegeID = document.getElementById("collegeID").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  const student = students.find(s => s.collegeID===collegeID);
+  if(!student){
+    document.getElementById("loginMsg").textContent="This ID is not registered!";
+    return;
+  }
+  if(student.password !== password){
+    document.getElementById("loginMsg").textContent="Incorrect password!";
+    return;
+  }
+
+  document.getElementById("authCard").style.display="none";
+  document.getElementById("loginMsg").textContent="";
+  showProfile(student);
+});
+
+// SHOW PROFILE
+function showProfile(student){
+  document.getElementById("profileCard").style.display="block";
+  document.getElementById("studentName").textContent=student.name;
+  document.getElementById("fatherName").textContent=student.father;
+  document.getElementById("studentID").textContent=student.collegeID;
+  document.getElementById("semester").textContent=student.semester;
+  document.getElementById("department").textContent=student.dept;
+  document.getElementById("session").textContent=student.session;
+  document.getElementById("batch").textContent=student.batch;
+  document.getElementById("studentImg").src=student.img;
+
+  // Payment Table
+  const tableBody = document.getElementById("paymentTable");
+  tableBody.innerHTML = student.payments.map(p=>`
+    <tr>
+      <td>${p.semester}</td>
+      <td>${p.paid.toLocaleString()}</td>
+      <td>${p.outstanding.toLocaleString()}</td>
+    </tr>
+  `).join('');
+
+  const totalPaid = student.payments.reduce((sum,p)=>sum+p.paid,0);
+  const totalOutstanding = student.payments.reduce((sum,p)=>sum+p.outstanding,0);
+  document.getElementById("totalPaid").textContent = totalPaid.toLocaleString();
+  document.getElementById("totalOutstanding").textContent = totalOutstanding.toLocaleString();
+}
 </script>
 
 </body>
